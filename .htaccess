@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^$ /msav/msav.pl
+
