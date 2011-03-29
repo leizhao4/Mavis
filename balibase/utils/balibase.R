@@ -116,10 +116,13 @@ bfgsOptim  <- function(lchData, rotation) {
 rotSeqOrd  <- function(seqOrder) {
   seqHues  <- seqOrder[, 2]
   nextHues <- c(seqHues[-1], seqHues[1])
-  diffHues <- angleDiff(nextHues, seqHues)
-  maxGap   <- which(diffHues == max(diffHues))
-  seqOrder <- rbind(seqOrder[(maxGap + 1) : nrow(seqOrder), ], seqOrder[1 : maxGap, ])
-  seqOrder
+  diffHues <- abs(angleDiff(nextHues, seqHues))
+  maxGap   <- which(diffHues == max(diffHues))[1]
+  newOrder <- seqOrder[1 : maxGap, ]
+  if (maxGap < nrow(seqOrder)) {
+    newOrder <- rbind(seqOrder[(maxGap + 1) : nrow(seqOrder), ], newOrder)
+  }
+  newOrder
 }
 
 sortSeq    <- function(rotData) {
