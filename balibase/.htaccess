@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule ^$ /msav/balibase/balibase.pl
+RewriteRule ^([0-9]+)$ /msav/balibase/balibase.pl/$1
+
