@@ -14,15 +14,15 @@ my $aln_num    = '';
 
 if ($ENV{PATH_INFO} =~ /\/([0-9]+)/) {
   $aln_num = $1;
-  $file_align = "bb_mft_hot/balibase.$aln_num\_mafft.fasta";
-  $file_color = "bb_mft_hot/balibase.$aln_num\_colors.txt";
-  $file_order = "bb_mft_hot/balibase.$aln_num\_seqorder.txt";
+  $file_align = "balibase/bb_mft_hot/balibase.$aln_num\_mafft.fasta";
+  $file_color = "balibase/bb_mft_hot/balibase.$aln_num\_colors.txt";
+  $file_order = "balibase/bb_mft_hot/balibase.$aln_num\_seqorder.txt";
 }
 
 sub align_list {
   my $html = "    <div id='other_aligns'>BaliBASE Data Set:<br />\n";
   my @bbid;
-  for (`ls bb_mft_hot/*_colors.txt`) {
+  for (`ls balibase/bb_mft_hot/*_colors.txt`) {
     next unless /balibase\.([0-9]+)_colors.txt/;
     push @bbid, $1;
   }
