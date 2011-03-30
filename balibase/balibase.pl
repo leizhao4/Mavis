@@ -21,9 +21,13 @@ if ($ENV{PATH_INFO} =~ /\/([0-9]+)/) {
 
 sub align_list {
   my $html = "    <div id='other_aligns'>BaliBASE Data Set:<br />\n";
+  my @bbid;
   for (`ls bb_mft_hot/*_colors.txt`) {
     next unless /balibase\.([0-9]+)_colors.txt/;
-    $html .= "      <a href='/msav/balibase/$1'>$1</a>\n";
+    push @bbid, $1;
+  }
+  for (sort { $a <=> $b } @bbid) {
+    $html .= "      <a href='/msav/balibase/$_'>$_</a>\n";
   }
   $html .= "    </div><br /><br /><br />\n";
   return $html;
