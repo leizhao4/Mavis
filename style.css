@@ -3,5 +3,5 @@ body  { padding: 0 24px; }
 div.alignment_header  { font-size: 24pt; margin: 18px 0; padding: 0 0 6px 6px; border-bottom: solid 1px #aaa; }
 div.alignment_footer  { text-align: right; margin: 18px 0; padding: 6px 12px; border-top: solid 1px #aaa; }
 table.alignment_table { margin: 10px 20px; }
-.aln_box td           { color: #fff; }
-.aln_box td.seq_name  { color: #000; padding: 0 10px; }
+.alignment_table td           { color: #fff; }
+.alignment_table td.seq_name  { color: #000; padding: 0 10px; }
