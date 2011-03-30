@@ -8,25 +8,31 @@ require AutoLoader;
 require Color;
 
 @ISA     = qw(Exporter AutoLoader);
-@EXPORT  = qw(visualize load_sequences load_colors create_css
-              html_header html_footer alignment_header alignment_footer);
+@EXPORT  = qw(show_alignment load_sequences load_colors create_css
+              html_header html_footer);
 $VERSION = '1.0';
 
-sub visualize {
-  my $sequences = shift;
-  my $html = "    <table class='aln_box' cellspacing='0'>\n";
-  for my $sequence (@$sequences) {
-    my $chars = [split //, $sequence->{seq}];
-    $html .= "      <tr>\n";
-  	$html .= "        <td id='seq_hue_$sequence->{row}'>&nbsp;</td>\n";
-  	$html .= "        <td class='seq_name'>$sequence->{name}</td>\n";
+sub show_alignment {
+  my $alignment = shift;
+  my $title     = shift || 'Multiple Sequence Alignment Visualization';
+  my $html      = "    <div class='alignment_container'>\n".
+                  "      <div class='alignment_header'>$title</div>\n".
+                  "      <table class='alignment_table' cellspacing='0'>\n";
+  for my $sequence (@$alignment) {
+    my $chars   = [split //, $sequence->{seq}];
+    $html      .= "        <tr>\n".
+  	              "          <td id='seq_hue_$sequence->{row}'>&nbsp;</td>\n".
+  	              "          <td class='seq_name'>$sequence->{name}</td>\n";
   	for my $col (1 .. scalar @$chars) {
   	  my $char = $chars->[$col - 1] || '-';
-  		$html .= "        <td id='cell_$sequence->{row}\_$col'>$char</td>\n";
+  		$html    .= "          <td id='cell_$sequence->{row}\_$col'>$char</td>\n";
   	}
-  	$html .= "    </tr>\n";
+  	$html      .= "        </tr>\n";
   }
-  $html .= "    </table>\n";
+  $html        .= "      </table>\n";
+  my $time      = localtime(time);
+  $html        .= "      <div class='alignment_footer'>$time</div>\n".
+                  "    </div>";
   return $html;
 }
 
@@ -131,16 +137,6 @@ sub html_footer {
   </body>
 </html>
 FOOTER
-}
-
-sub alignment_header {
-  my $title = shift || 'Multiple Sequence Alignment Visualization';
-  return "    <div class='aln_header'>$title</div>\n";
-}
-
-sub alignment_footer {
-  my $time = localtime(time);
-  return "    <div class='aln_footer'>$time</div>\n";
 }
 
 1;

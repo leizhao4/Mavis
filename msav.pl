@@ -17,9 +17,7 @@ eval {
   my $colors    = &load_colors(FILE_COL);
   my $css       = &create_css($sequences, $colors, SHOW_CHAR);
   print &html_header('Multiple Sequence Alignment Visualization', $css);
-  print &alignment_header('Multiple Sequence Alignment Visualization');
-  print &visualize($sequences);
-  print &alignment_footer;
+  print &show_alignment($sequences);
   print &html_footer;
   1;
 }

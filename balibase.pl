@@ -46,9 +46,7 @@ eval {
     my $css       = &create_css($sequences, $colors, $show_char);
     $title .= " (Balibase $aln_num)" if $aln_num ne '';
     print &html_header($title, $css);
-    print &alignment_header($title);
-    print &visualize($sequences);
-    print &alignment_footer;
+    print &show_alignment($sequences, $title);
     print &align_list;
     print &html_footer;
   }
