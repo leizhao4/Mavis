@@ -93,16 +93,7 @@ sub load_colors {
 
 sub create_css {
   my ($sequences, $colors, $show_char) = @_;
-  my $css = <<HEADER;
-    <style type="text/css">
-      *     { margin: 0; padding: 0; font-family: Courier; font-size: 8pt; }
-      body  { padding: 0 24px; }
-      div.aln_header  { font-size: 28pt; margin: 18px 0; padding: 0 0 6px 6px; border-bottom: solid 1px #aaa; }
-      div.aln_footer  { text-align: right; margin: 18px 0; padding: 6px 12px; border-top: solid 1px #aaa; }
-      table.aln_box   { margin: 10px 20px; }
-      .aln_box td     { color: #fff; }
-      .aln_box td.seq_name  { color: #000; padding: 0 10px; }
-HEADER
+  my $css = "<style type='text/css'>\n";
   for my $sequence (@$sequences) {
     my $row = $sequence->{row};
     my $seq = $sequence->{seq};
@@ -127,7 +118,9 @@ sub html_header {
 Content-type: text/html\n
 <html>
   <head>
-    <title>$title</title>\n$css
+    <title>$title</title>
+    <link href='style.css' rel='stylesheet' type='text/css'> 
+    $css
   </head>
   <body>
 HEADER
