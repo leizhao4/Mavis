@@ -1,0 +1,16 @@
+Rscript balibase.R ../bb_mft_hot/balibase.14_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.14_colors.txt ../bb_mft_hot/balibase.14_seqorder.txt
+Rscript balibase.R ../bb_mft_hot/balibase.23_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.23_colors.txt ../bb_mft_hot/balibase.23_seqorder.txt
+Rscript balibase.R ../bb_mft_hot/balibase.42_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.42_colors.txt ../bb_mft_hot/balibase.42_seqorder.txt
+Rscript balibase.R ../bb_mft_hot/balibase.47_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.47_colors.txt ../bb_mft_hot/balibase.47_seqorder.txt
+Rscript balibase.R ../bb_mft_hot/balibase.62_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.62_colors.txt ../bb_mft_hot/balibase.62_seqorder.txt
+Rscript balibase.R ../bb_mft_hot/balibase.187_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.187_colors.txt ../bb_mft_hot/balibase.187_seqorder.txt
+Rscript balibase.R ../bb_mft_hot/balibase.193_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.193_colors.txt ../bb_mft_hot/balibase.193_seqorder.txt
+Rscript balibase.R ../bb_mft_hot/balibase.252_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.252_colors.txt ../bb_mft_hot/balibase.252_seqorder.txt
+Rscript balibase.R ../bb_mft_hot/balibase.313_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.313_colors.txt ../bb_mft_hot/balibase.313_seqorder.txt
+Rscript balibase.R ../bb_mft_hot/balibase.322_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.322_colors.txt ../bb_mft_hot/balibase.322_seqorder.txt
+Rscript balibase.R ../bb_mft_hot/balibase.323_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.323_colors.txt ../bb_mft_hot/balibase.323_seqorder.txt
+Rscript balibase.R ../bb_mft_hot/balibase.422_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.422_colors.txt ../bb_mft_hot/balibase.422_seqorder.txt
+Rscript balibase.R ../bb_mft_hot/balibase.425_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.425_colors.txt ../bb_mft_hot/balibase.425_seqorder.txt
+Rscript balibase.R ../bb_mft_hot/balibase.467_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.467_colors.txt ../bb_mft_hot/balibase.467_seqorder.txt
+Rscript balibase.R ../bb_mft_hot/balibase.502_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.502_colors.txt ../bb_mft_hot/balibase.502_seqorder.txt
+Rscript balibase.R ../bb_mft_hot/balibase.519_mafft_cos_res_pair.scr ../bb_mft_hot/balibase.519_colors.txt ../bb_mft_hot/balibase.519_seqorder.txt
