@@ -96,12 +96,12 @@ sub create_css {
 
 
 if (param()) {
-  if (param('query') eq 'alignment') {
+  if (param('action') eq 'alignment') {
     my $alignment = &load_sequences(FILE_ALN, FILE_ORD);
     print header('application/json');
     print encode_json $alignment;
   }
-  elsif (param('query') eq 'colors') {
+  elsif (param('action') eq 'colors') {
     my $colors = &load_colors(FILE_COL);
     print header('application/json');
     print encode_json $colors;
