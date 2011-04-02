@@ -1,8 +1,10 @@
+var alignmentID = "MyAlignment";
+var showText = false;
+
 $(document).ready(function() {
-  var alignmentID = "MyAlignment";
   drawAlignmentLayout("Multiple Sequence Alignment Visualization (" + alignmentID + ")")
-  drawAlignmentTable(alignmentID);
-  drawAlignmentColors(alignmentID);
+  drawAlignmentTable();
+  drawAlignmentColors();
 });
 
 function apiUrl(alignmentID, action) {
@@ -15,7 +17,7 @@ function drawAlignmentLayout(title) {
   $("#alignment_container").append("<div id='alignment_footer'>" + new Date().toLocaleString() + "</div>");
 }
 
-function drawAlignmentTable(alignmentID, showText) {
+function drawAlignmentTable() {
   $.getJSON(apiUrl(alignmentID, "alignment"), function(alignment) {
     $("#alignment_table").empty();
     $.each(alignment, function(i, sequence) {
@@ -31,7 +33,7 @@ function drawAlignmentTable(alignmentID, showText) {
   });
 }
 
-function drawAlignmentColors(alignmentID) {
+function drawAlignmentColors() {
   $.getJSON(apiUrl(alignmentID, "colors"), function(colors) {
     $.each(colors, function(column, columnColors) {
       if (columnColors != null) {
@@ -41,4 +43,10 @@ function drawAlignmentColors(alignmentID) {
       }
     });
   });
+}
+
+function toggleAlignmentText() {
+  showText = !showText;
+  drawAlignmentTable();
+  drawAlignmentColors();
 }
