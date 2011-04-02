@@ -1,4 +1,4 @@
-var alignmentID = "MyAlignment";
+var alignmentID = "TestAlignment";
 var showText = false;
 var AlignmentStatus = {
   "Ready" : 1,
@@ -15,8 +15,7 @@ var alignmentData = {
 $(document).ready(function() {
   getAlignment(alignmentID);
   drawAlignmentLayout("Multiple Sequence Alignment Visualization (" + alignmentID + ")");
-  drawAlignmentTable();
-  drawAlignmentColors();
+  refreshDisplay();
 });
 
 function apiUrl(alignmentID, action) {
@@ -34,8 +33,7 @@ function refreshDisplay() {
 
 function drawAlignmentLayout(title) {
   $("#alignment_container").html("<div id='alignment_header'>" + title + "</div>");
-  $("#alignment_container").append("<div><a href='#' onclick='toggleAlignmentText()'>Show/Hide Sequence Text</a></div>");
-  $("#alignment_container").append("<div><a href='#' onclick='refreshDisplay()'>Refresh Display</a></div>");
+  $("#alignment_container").append("<a href='#' class='button' onclick='toggleAlignmentText()'>Show/Hide Sequence Text</a>");
   $("#alignment_container").append("<table id='alignment_table' cellspacing='0'></table>");
   $("#alignment_container").append("<div id='alignment_footer'>" + new Date().toLocaleString() + "</div>");
 }
@@ -56,6 +54,7 @@ function drawAlignmentTable() {
   }
   else if (alignmentData.status == AlignmentStatus.Pending) {
     $("#alignment_table").html("<tr><td>Pending...</td></tr>");
+    setTimeout("refreshDisplay()", 1000);
   }
   else {
     $("#alignment_table").html("<tr><td>Error</td></tr>");
