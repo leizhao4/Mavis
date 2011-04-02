@@ -42,7 +42,7 @@ function drawAlignmentTable() {
   if (alignmentData.status == AlignmentStatus.Ready) {
     $("#alignment_table").empty();
     $.each(alignmentData.sequences, function(i, sequence) {
-      var rowHtml = "<tr><td id='seq_hue_" + sequence.row + "'>&nbsp;</td><td class='seq_name'>" + sequence.name + "</td>";
+      var rowHtml = "<tr><td id='seq_color_" + sequence.row + "'>&nbsp;</td><td class='seq_name'>" + sequence.name + "</td>";
       $.each(sequence.seq.split(''), function(j, character) {
         var column = j + 1;
         if (!showText) character = "&nbsp;";
@@ -68,6 +68,9 @@ function drawAlignmentColors() {
         $("#cell_" + row + "_" + column).css("background-color", cellColor);
       });
     }
+  });
+  $.each(alignmentData.sequences, function(i, sequence) {
+    $("#seq_color_" + sequence.row).css("background-color", sequence.color);
   });
 }
 
