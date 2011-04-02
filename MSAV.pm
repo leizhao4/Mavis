@@ -125,7 +125,7 @@ Content-type: text/html\n
 <html>
   <head>
     <title>$title</title>
-    <link href='/msav/css/style.css' rel='stylesheet' type='text/css'> 
+    <link href='/msav/css/style-1.2.css' rel='stylesheet' type='text/css'> 
     $css
   </head>
   <body>

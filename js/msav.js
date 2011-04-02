@@ -1,12 +1,14 @@
 $(document).ready(function() {
-  show_alignment_header("Multiple Sequence Alignment Visualization");
-  show_alignment_footer();
+  create_alignment_layout("Multiple Sequence Alignment Visualization")
 });
 
-function show_alignment_header(title) {
-  $("#alignment_1 .alignment_header").html(title);
+function create_alignment_layout(title) {
+  $("#alignment_container").html("<div id='alignment_header'>" + title + "</div>");
+  $("#alignment_container").append("<table id='alignment_table' cellspacing='0'></table>");
+  $("#alignment_container").append("<div id='alignment_footer'>" + new Date().toLocaleString() + "</div>");
+  create_alignment_table();
 }
 
-function show_alignment_footer() {
-  $("#alignment_1 .alignment_footer").html(new Date().toLocaleString());
+function create_alignment_table() {
+  //$("#alignment_table").html();
 }
