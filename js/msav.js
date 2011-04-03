@@ -1,23 +1,24 @@
 var alignmentID   = urlParam("id");
 var showText      = false;
-var DataStatus    = { "Ready" : 1, "Pending" : 0, "Error" : -1 };
+var DataStatus    = { "Ready" : 1, "Pending" : 0, "Error" : 2 };
 var alignmentData = { "id" : alignmentID, "status" : DataStatus.Pending, "sequences" : [], "colors" : [] };
 
 $(document).ready(function() {
-  getAlignment(alignmentID);
-  drawAlignmentLayout("Multiple Sequence Alignment Visualization (" + alignmentID + ")");
-  refreshDisplay();
+  getAlignmentData(alignmentID);
+  drawAlignmentLayout("Multiple Sequence Alignment Visualization (ID: " + alignmentID + ")");
+  drawAlignmentTable();
 });
 
 function apiUrl(alignmentID, action) {
   return "api.pl?id=" + alignmentID;
 }
 
-function getAlignment(alignmentID) {
-  $.getJSON(apiUrl(alignmentID), function(alignment) { alignmentData = alignment; });
+function getAlignmentData(alignmentID) {
+  $.getJSON(apiUrl(alignmentID), function(alignment) { alignmentData = alignment; refreshDisplay(); });
 }
 
 function refreshDisplay() {
+  drawAlignmentLayout("Multiple Sequence Alignment Visualization (ID: " + alignmentID + ")");
   drawAlignmentTable();
   drawAlignmentColors();
 }
@@ -45,10 +46,10 @@ function drawAlignmentTable() {
   }
   else if (alignmentData.status == DataStatus.Pending) {
     $("#alignment_table").html("<tr><td>Loading...</td></tr>");
-    setTimeout("refreshDisplay()", 1000);
+    setTimeout("getAlignmentData(alignmentID)", 3000);
   }
   else {
-    $("#alignment_table").html("<tr><td>Error</td></tr>");
+    $("#alignment_table").html("<tr><td>Error!</td></tr>");
   }
 }
 

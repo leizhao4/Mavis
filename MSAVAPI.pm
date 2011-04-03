@@ -10,23 +10,34 @@ require AutoLoader;
 @EXPORT  = qw(load_alignment);
 $VERSION = '2.0';
 
-my $align_file  = 'Alignments.txt';
-my $color_file  = 'Colors.txt';
-my $order_file  = 'SequenceOrder.txt';
+sub alignment_file_path {
+  my $align_id = shift || 'demo';
+  return "data/$align_id/alignment.fasta";
+}
+
+sub colors_file_path {
+  my $align_id = shift || 'demo';
+  return "data/$align_id/colors.tsv";
+}
+
+sub order_file_path {
+  my $align_id = shift || 'demo';
+  return "data/$align_id/order.tsv";
+}
 
 sub load_alignment {
   my $align_id  = shift;
-  my $sequences = &load_sequences($align_file, $order_file);
-  my $colors    = &load_colors($color_file);
+  my $sequences = &load_sequences($align_id);
+  my $colors    = &load_colors($align_id);
   my $alignment = { id => $align_id, status => 1, sequences => $sequences, colors => $colors };
   return $alignment;
 }
 
 sub load_sequences {
-  my ($align_file, $order_file) = @_;
+  my $align_id = shift;
   my $sequences;
-  my $align_data = &load_alignment_file($align_file);
-  my $order_data = &load_sequence_order($order_file);
+  my $align_data = &load_alignment_file(&alignment_file_path($align_id));
+  my $order_data = &load_sequence_order(&order_file_path($align_id));
   for my $order_info (@$order_data) {
     my $seq_info = $align_data->[$order_info->{row} - 1];
     push @$sequences, {(%$seq_info, %$order_info)};
@@ -35,20 +46,20 @@ sub load_sequences {
 }
 
 sub load_alignment_file {
-  my $aln_file = shift;
-  my $aln_data;
-  open ALN, $aln_file or die "Input file ($aln_file) is missing.\n";
+  my $align_file = shift;
+  my $align_data;
+  open ALIGN, $align_file or die "Input file ($align_file) is missing.\n";
 	our $/ = ">";
-	for my $aln_input (<ALN>) {
-		chomp $aln_input;
-		$aln_input =~ /^(.*?)\n(.*)/s or next;
+	for my $align_input (<ALIGN>) {
+		chomp $align_input;
+		$align_input =~ /^(.*?)\n(.*)/s or next;
 		my ($name, $seq) = ($1, $2);
 		$seq =~ s/\n//sg;
-		push @$aln_data, { name => $name, seq => $seq };
+		push @$align_data, { name => $name, seq => $seq };
 	}
 	$/ = "\n";
-  close ALN;
-  return $aln_data;
+  close ALIGN;
+  return $align_data;
 }
 
 sub load_sequence_order {
@@ -65,7 +76,8 @@ sub load_sequence_order {
 }
 
 sub load_colors {
-  my $color_file = shift;
+  my $align_id   = shift;
+  my $color_file = &colors_file_path($align_id);
   my $colors;
   open COLORS, $color_file or die "Input file ($color_file) is missing.\n";
   for my $line (<COLORS>) {

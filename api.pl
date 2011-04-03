@@ -9,4 +9,10 @@ use MSAVAPI;
 my $alignment_id = param('id');
 
 print header('application/json');
-print encode_json &load_alignment($alignment_id);
+
+eval {
+  print encode_json &load_alignment($alignment_id);
+}
+or do {
+  print encode_json({ status => -1, id => 'Error', sequences => [], colors => [[]] });
+}
