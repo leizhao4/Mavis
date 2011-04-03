@@ -5,7 +5,7 @@ var alignmentData = { "id" : alignmentID, "status" : DataStatus.Pending, "sequen
 
 $(document).ready(function() {
   getAlignmentData(alignmentID);
-  drawAlignmentLayout("Multiple Sequence Alignment Visualization (ID: " + alignmentID + ")");
+  drawAlignmentLayout();
   drawAlignmentTable();
   drawAlignmentList();
 });
@@ -21,12 +21,14 @@ function getAlignmentData(alignmentID) {
 }
 
 function refreshDisplay() {
-  drawAlignmentLayout("Multiple Sequence Alignment Visualization (ID: " + alignmentID + ")");
+  drawAlignmentLayout();
   drawAlignmentTable();
   drawAlignmentColors();
 }
 
 function drawAlignmentLayout(title) {
+  if (!title || title.length < 1)
+    title = "Multiple Sequence Alignment Visualization" + (alignmentID.length > 0 ? " (ID: " + alignmentID + ")" : "");
   $("#alignment_container").html("<div id='alignment_header'>" + title + "</div>");
   $("#alignment_container").append("<a href='#' class='button' onclick='toggleAlignmentText()'>Show/Hide Sequence Text</a>");
   $("#alignment_container").append("<table id='alignment_table' cellspacing='0'></table>");
