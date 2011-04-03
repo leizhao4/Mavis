@@ -5,37 +5,31 @@ use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
 require Exporter;
 require AutoLoader;
-#require Color;
 
 @ISA     = qw(Exporter AutoLoader);
 @EXPORT  = qw(load_alignment);
 $VERSION = '2.0';
 
-use constant {
-  SHOW_CHAR => 0,
-  FILE_ALN  => 'Alignments.txt',
-  FILE_COL  => 'Colors.txt',
-  FILE_ORD  => 'SequenceOrder.txt',
-};
+my $align_file  = 'Alignments.txt';
+my $color_file  = 'Colors.txt';
+my $order_file  = 'SequenceOrder.txt';
 
 sub load_alignment {
   my $align_id  = shift;
-  my $sequences = &load_sequences(FILE_ALN, FILE_ORD);
-  my $colors    = &load_colors(FILE_COL);
+  my $sequences = &load_sequences($align_file, $order_file);
+  my $colors    = &load_colors($color_file);
   my $alignment = { id => $align_id, status => 1, sequences => $sequences, colors => $colors };
   return $alignment;
 }
 
 sub load_sequences {
-  my ($aln_file, $order_file) = @_;
+  my ($align_file, $order_file) = @_;
   my $sequences;
-  my $aln_data  = &load_alignment_file($aln_file);
-  my $seq_order = &load_sequence_order($order_file);
-  for my $seq_info (@$seq_order) {
-    my ($seq_number, $seq_color) = ($seq_info->{number}, $seq_info->{color});
-    my $sequence = $aln_data->[$seq_number - 1];
-    $sequence->{color} = $seq_color;
-    push @$sequences, $sequence;
+  my $align_data = &load_alignment_file($align_file);
+  my $order_data = &load_sequence_order($order_file);
+  for my $order_info (@$order_data) {
+    my $seq_info = $align_data->[$order_info->{row} - 1];
+    push @$sequences, {(%$seq_info, %$order_info)};
   }
   return $sequences;
 }
@@ -43,16 +37,14 @@ sub load_sequences {
 sub load_alignment_file {
   my $aln_file = shift;
   my $aln_data;
-  my $row = 0;
   open ALN, $aln_file or die "Input file ($aln_file) is missing.\n";
 	our $/ = ">";
 	for my $aln_input (<ALN>) {
 		chomp $aln_input;
 		$aln_input =~ /^(.*?)\n(.*)/s or next;
 		my ($name, $seq) = ($1, $2);
-		$row ++;
 		$seq =~ s/\n//sg;
-		push @$aln_data, { name => $name, seq => $seq, row => $row };
+		push @$aln_data, { name => $name, seq => $seq };
 	}
 	$/ = "\n";
   close ALN;
@@ -65,8 +57,8 @@ sub load_sequence_order {
   open ORDER, $seq_order_file or die "Input file ($seq_order_file) is missing.\n";
   for my $seq_info (<ORDER>) {
     chomp $seq_info;
-    my ($seq_number, $seq_hue) = split /\t/, $seq_info;
-    push @$seq_order, { number => $seq_number, color => &hue_to_html($seq_hue) };
+    my ($row, $seq_hue) = split /\t/, $seq_info;
+    push @$seq_order, { row => $row, color => &hue_to_html($seq_hue) };
   }
   close ORDER;
   return $seq_order;
@@ -79,7 +71,7 @@ sub load_colors {
   for my $line (<COLORS>) {
     chomp $line;
     next if $line =~ /^#/;
-    die unless $line =~ /^\s*(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)$/;
+    next unless $line =~ /^\s*(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)$/;
     $colors->[$1][$2] = &rgb_to_html($3, $4, $5);
   }
   close COLORS;
@@ -95,20 +87,18 @@ sub rgb_to_html {
 
 sub hue_to_html {
   my $hue = shift;
-  
+  my $r   = &hue2prim($hue + 120);
+  my $g   = &hue2prim($hue);
+  my $b   = &hue2prim($hue - 120);
+  return &rgb_to_html($r, $g, $b);
+
   sub hue2prim {
-    my $h = shift;
-    $h = $h % 360;
+    my $h = (shift) % 360;
     if ($h < 60)  { return $h / 60; }
     if ($h < 180) { return 1; }
     if ($h < 240) { return (240 - $h) / 60; }
     return 0;
   }
-
-  my $r = &hue2prim($hue + 120);
-  my $g = &hue2prim($hue);
-  my $b = &hue2prim($hue - 120);
-  return &rgb_to_html($r, $g, $b);
 }
 
 1;
