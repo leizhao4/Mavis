@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use CGI qw(:standard);
 use JSON;
-use MSAVAPI;
+use MSAV::API;
 
 my $action   = param('action');
 my $align_id = param('id');

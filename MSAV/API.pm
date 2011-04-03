@@ -1,4 +1,4 @@
-package MSAVAPI;
+package MSAV::API;
 
 use warnings;
 use strict;
