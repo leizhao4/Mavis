@@ -7,10 +7,13 @@ $(document).ready(function() {
   getAlignmentData(alignmentID);
   drawAlignmentLayout("Multiple Sequence Alignment Visualization (ID: " + alignmentID + ")");
   drawAlignmentTable();
+  drawAlignmentList();
 });
 
 function apiUrl(alignmentID, action) {
-  return "api.pl?id=" + alignmentID;
+  var URL = "api.pl?id=" + alignmentID;
+  if (action) URL = URL + "&action=" + action;
+  return URL;
 }
 
 function getAlignmentData(alignmentID) {
@@ -63,6 +66,15 @@ function drawAlignmentColors() {
   });
   $.each(alignmentData.sequences, function(i, sequence) {
     $("#seq_color_" + sequence.row).css("background-color", sequence.color);
+  });
+}
+
+function drawAlignmentList() {
+  $("#alignment_list").html("Other Alignments: ");
+  $.getJSON(apiUrl(alignmentID, "list"), function(list) {
+    $.each(list, function(i, aID) {
+      $("#alignment_list").append("<li><a href='?id=" + aID + "'>" + aID + "</a></li>");
+    });
   });
 }
 
