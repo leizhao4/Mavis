@@ -6,7 +6,7 @@ body  { padding: 0 24px; }
 #alignment_table *  { font-family: Courier, "Courier New"; }
 #alignment_table td.seq_name  { padding: 0 10px; }
 #alignment_list     { margin: 18px 0; }
-#alignment_list li  { display: inline-block; }
+#alignment_list li  { display: inline-block; margin: 0 4px; }
 a.button {
   display: block; margin: 20px; margin-top: 0; padding: 4px 16px; width: 200px; border: solid 1px #aaa;
   text-decoration: none; color: #444; text-align: center; }
