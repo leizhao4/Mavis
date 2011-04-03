@@ -72,7 +72,7 @@ function drawAlignmentColors() {
 }
 
 function drawAlignmentList() {
-  $("#alignment_list").html("Other Alignments: ");
+  $("#alignment_list").html("<div>Other Alignments:</div>");
   $.getJSON(apiUrl(alignmentID, "list"), function(list) {
     $.each(list, function(i, aID) {
       $("#alignment_list").append("<li><a href='?id=" + aID + "'>" + aID + "</a></li>");
