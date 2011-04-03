@@ -1,4 +1,4 @@
 RewriteEngine On
-RewriteRule ^$ /msav/msav.pl
-RewriteRule ^balibase$ /msav/balibase.pl
-RewriteRule ^balibase/(.*)$ /msav/balibase.pl/$1
+#RewriteRule ^$ /msav/msav.pl
+#RewriteRule ^balibase$ /msav/balibase.pl
+#RewriteRule ^balibase/(.*)$ /msav/balibase.pl/$1
