@@ -1,16 +1,7 @@
-var alignmentID = "TestAlignment";
-var showText = false;
-var AlignmentStatus = {
-  "Ready" : 1,
-  "Pending" : 0,
-  "Error" : -1
-};
-var alignmentData = {
-  "id" : alignmentID,
-  "status" : AlignmentStatus.Pending,
-  "sequences" : [],
-  "colors" : []
-};
+var alignmentID   = urlParam("id");
+var showText      = false;
+var DataStatus    = { "Ready" : 1, "Pending" : 0, "Error" : -1 };
+var alignmentData = { "id" : alignmentID, "status" : DataStatus.Pending, "sequences" : [], "colors" : [] };
 
 $(document).ready(function() {
   getAlignment(alignmentID);
@@ -39,7 +30,7 @@ function drawAlignmentLayout(title) {
 }
 
 function drawAlignmentTable() {
-  if (alignmentData.status == AlignmentStatus.Ready) {
+  if (alignmentData.status == DataStatus.Ready) {
     $("#alignment_table").empty();
     $.each(alignmentData.sequences, function(i, sequence) {
       var rowHtml = "<tr><td id='seq_color_" + sequence.row + "'>&nbsp;</td><td class='seq_name'>" + sequence.name + "</td>";
@@ -52,8 +43,8 @@ function drawAlignmentTable() {
       $("#alignment_table").append(rowHtml);
     });
   }
-  else if (alignmentData.status == AlignmentStatus.Pending) {
-    $("#alignment_table").html("<tr><td>Pending...</td></tr>");
+  else if (alignmentData.status == DataStatus.Pending) {
+    $("#alignment_table").html("<tr><td>Loading...</td></tr>");
     setTimeout("refreshDisplay()", 1000);
   }
   else {
@@ -77,4 +68,12 @@ function drawAlignmentColors() {
 function toggleAlignmentText() {
   showText = !showText;
   refreshDisplay();
+}
+
+function urlParam(name) {
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS  = "[\\?&]" + name + "=([^&#]*)";
+  var regex   = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+  return results ? results[1] : "";
 }
