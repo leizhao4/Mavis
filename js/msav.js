@@ -27,7 +27,7 @@ function drawAlignmentLayout(title) {
   $("#alignment_container").html("<div id='alignment_header'>" + title + "</div>");
   $("#alignment_container").append("<a href='#' class='button' onclick='toggleAlignmentText()'>Show/Hide Sequence Text</a>");
   $("#alignment_container").append("<table id='alignment_table' cellspacing='0'></table>");
-  $("#alignment_container").append("<div id='alignment_footer'>" + new Date().toLocaleString() + "</div>");
+  $("#alignment_container").append("<div id='alignment_footer'>" + localtime() + "</div>");
 }
 
 function drawAlignmentTable() {
@@ -73,8 +73,11 @@ function toggleAlignmentText() {
 
 function urlParam(name) {
   name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-  var regexS  = "[\\?&]" + name + "=([^&#]*)";
-  var regex   = new RegExp( regexS );
-  var results = regex.exec( window.location.href );
+  var regex   = new RegExp("[\\?&]" + name + "=([^&#]*)");
+  var results = regex.exec(window.location.href);
   return results ? results[1] : "";
+}
+
+function localtime() {
+  return new Date().toLocaleString();
 }
