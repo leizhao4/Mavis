@@ -1,10 +1,11 @@
-*     { margin: 0; padding: 0; font-family: Courier; font-size: 8pt; }
+*     { margin: 0; padding: 0; font-family: Verdana; font-size: 8pt; }
 body  { padding: 0 24px; }
 #alignment_header { font-size: 24pt; margin: 18px 0; padding: 0 0 6px 6px; border-bottom: solid 1px #aaa; }
 #alignment_footer { text-align: right; margin: 18px 0; padding: 6px 12px; border-top: solid 1px #aaa; }
 #alignment_table  { margin: 10px 20px; }
+#alignment_table *  { font-family: Courier, "Courier New"; }
 #alignment_table td.seq_name  { padding: 0 10px; }
 a.button {
-  display: block; margin: 20px; padding: 10px; width: 180px; border: solid 1px #aaa;
+  display: block; margin: 20px; margin-top: 0; padding: 4px 16px; width: 200px; border: solid 1px #aaa;
   text-decoration: none; color: #444; text-align: center; }
 a.button:hover { background-color: #aaa; color: #fff; }
