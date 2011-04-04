@@ -68,8 +68,8 @@ sub load_sequence_order {
   open ORDER, $seq_order_file or die "Input file ($seq_order_file) is missing.\n";
   for my $seq_info (<ORDER>) {
     chomp $seq_info;
-    my ($row, $seq_hue) = split /\t/, $seq_info;
-    push @$seq_order, { row => $row, color => &hue_to_html($seq_hue) };
+    my ($row, $seq_hue, $r, $g, $b) = split /\t/, $seq_info;
+    push @$seq_order, { row => $row, color => &rgb_to_html($r, $g, $b) };
   }
   close ORDER;
   return $seq_order;

@@ -1,8 +1,10 @@
 library(colorspace)
 
-FILE.SCORE <- "Scores.txt"
-FILE.COLOR <- "Colors.txt"
-FILE.ORDER <- "SequenceOrder.txt"
+args <- commandArgs(TRUE)
+
+FILE.SCORE <- args[1]
+FILE.COLOR <- args[2]
+FILE.ORDER <- args[3]
 
 scaleScore <- function(filename) {
   rawData  <- read.table(filename)
@@ -44,7 +46,7 @@ createLch    <- function(scaled) {
 adjustColor <- function(lchColor) {
   lchData   <- coords(lchColor)
   chroma    <- lchData[, 2]
-  chroma    <- (chroma / max(chroma)) * 20 + 60
+  #chroma    <- (chroma / max(chroma)) * 80 + 0
   lightness <- (chroma / max(chroma)) * 0 + 70
   lchData   <- cbind(lightness, chroma, lchData[, 3])
   lchColor  <- polarLAB(lchData)
@@ -121,23 +123,32 @@ rotSeqOrd  <- function(seqOrder) {
 }
 
 sortSeq    <- function(rotData) {
-  nRows    <- max(lchData[, 2])
+  nRows    <- max(rotData[, 2])
   sortData <- data.frame()
   for (row in 1 : nRows) {
-    rowAvg   <- angleAvg(rotData[rotData[, 2] == row, 5]) %% 360
-    sortData <- rbind(sortData, c(row, rowAvg))
+    rowData  <- rotData[rotData[, 2] == row, ]
+    rowAvg   <- angleAvg(rowData[, 5]) %% 360
+    rgbAvg   <- colorAvg(rowData)
+    sortData <- rbind(sortData, c(row, rowAvg, rgbAvg))
   }
   seqOrder <- sortData[order(sortData[, 2]), ]
   seqOrder <- rotSeqOrd(seqOrder)
   seqOrder
 }
 
+colorAvg   <- function(lchData) { # need to be refactored
+  lchColor <- polarLAB(data.matrix(lchData[, 3:5]))
+  rgbColor <- as(lchColor, "RGB")
+  rgbData  <- coords(rgbColor)
+  mean(data.frame(rgbData))
+}
+
 outputData <- function(rotData, seqOrder) {
   lchColor <- polarLAB(data.matrix(rotData[, 3:5]))
   rgbColor <- as(lchColor, "RGB")
   rgbData  <- cbind(rotData[, 1:2], coords(rgbColor))
-  write(t(rgbData),  file = FILE.COLOR, sep = "\t")
-  write(t(seqOrder), file = FILE.ORDER, sep = "\t", ncolumns = 2)
+  write(t(rgbData),  file = FILE.COLOR, sep = "\t", ncolumns = 5)
+  write(t(seqOrder), file = FILE.ORDER, sep = "\t", ncolumns = 5)
 }
 
 scaled   <- scaleScore(FILE.SCORE)
