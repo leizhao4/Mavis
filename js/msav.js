@@ -1,5 +1,5 @@
 var alignmentID   = urlParam("id");
-var showText      = false;
+var showText      = true;
 var DataStatus    = { "Ready" : 1, "Pending" : 0, "Error" : 2 };
 var alignmentData = { "id" : alignmentID, "status" : DataStatus.Pending, "sequences" : [], "colors" : [] };
 
