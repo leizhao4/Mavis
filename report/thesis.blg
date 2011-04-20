@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99c (Web2C 7.5.7)
+The top-level auxiliary file: thesis.aux
+The style file: unsrt.bst
+Database file #1: references.bib
+Warning--empty journal in Thompsonaa
+Warning--empty year in Thompsonaa
+You've used 8 entries,
+            1791 wiz_defined-function locations,
+            505 strings with 5025 characters,
+and the built_in function-call counts, 1949 in all, are:
+= -- 166
+> -- 99
+< -- 0
++ -- 36
+- -- 28
+* -- 167
+:= -- 320
+add.period$ -- 23
+call.type$ -- 8
+change.case$ -- 7
+chr.to.int$ -- 0
+cite$ -- 10
+duplicate$ -- 72
+empty$ -- 182
+format.name$ -- 28
+if$ -- 411
+int.to.chr$ -- 0
+int.to.str$ -- 8
+missing$ -- 9
+newline$ -- 42
+num.names$ -- 8
+pop$ -- 19
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 25
+stack$ -- 0
+substring$ -- 158
+swap$ -- 7
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 2
+while$ -- 19
+width$ -- 9
+write$ -- 85
+(There were 2 warnings)

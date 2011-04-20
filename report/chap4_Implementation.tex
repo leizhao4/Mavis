@@ -1,0 +1,26 @@
+\chapter{Implementation}\label{chap:Implementation}
+
+We implemented the whole visualization pipeline with an R script as back-end, a Perl CGI script as API, and an HTML/JavaScript web page as front-end.
+
+The R script coloring.r takes the pair-wise similarity score file as input, performs multidimensional scaling and color optimization, sorts sequences, and output colors and sequence information into two tab-separated files colors.tsv and seqinfo.tsv. The front-end web page takes an alignment ID as parameter and sends it to the API. The Perl CGI script parse the color file and sequence information file, along with the FASTA-format alignment sequences data, and sends them back to front-end in JSON format. The front-end uses JavaScript to generate the alignment matrix and render it with colors and symbol letters.
+
+\section{R Script}
+
+The script coloring.r begins with reading three arguments from command-line calls: score file name, colors file name and sequence information file name. The first file is for input and the latter two are for output. An example of calling this script on UNIX operating system is given below.
+Rscript coloring.r data/score.tsv data/colors.tsv data/seqinfo.tsv
+
+The file score.tsv contains four columns separated by tabs: column number, row number one, row number two, and similarity score between these two rows in this column. The row and column numbers start from one, and the similarity score values range from zero to one.
+
+The script coloring.r consists of four parts. The first part reads the input file, performs multidimensional scaling and create color for each symbol in the CIE LCH space. The second part rotates and flips color hues and optimize the penalty function. The third part sorts the sequences by their average hues and calculates each sequence’s average RGB color. The last part outputs the symbol colors and sequence information into corresponding files.
+
+The color file colors.tsv has five columns separated by tabs: column number, row number, and the symbol color in RGB triplet (red, green, blue) in the range from 0 to 1, which will be converted into hexadecimal format used in HTML and JavaScript. The sequence information file seqinfo.tsv also has five columns: row number, average hue from 0 to 360 degrees, average color in RGB triplet.
+
+\section{API}
+
+A Perl CGI script api.pl and a Perl package Mavis::API act as the API between the R back-end and HTML/JavaScript front-end. The Perl CGI api.pl takes two parameters from HTTP requests, ‘action’ and ‘id’. The default action is ‘alignment’, meaning the alignment information, including sequences, colors, average colors and order of sequences. In this action, an additional ‘id’ parameter must be provided as the alignment ID. Another available action is ‘list’, which requests all existing alignment IDs.
+
+The API returns the query result to the web page in JSON (JavaScript Object Notation) format, which is a lightweight text-based data-interchange standard. JSON is derived from a subset of JavaScript syntax and can be easily parsed in JavaScript as well as many other languages, like Perl. We included the Perl JSON 2.51 module to provide JSON encoding/decoding ability to our API.
+
+\section{User Interface}
+
+We implement an web interface with HTML and JavaScript to send API requests and draw visualization graphs. The JavaScript code dynamically communicates with API, creates an HTML table, and fills in colors and symbols. This part is simplified by jQuery, which is a popular cross-platform JavaScript library that abstracts complicated DOM selection, CSS manipulation and Ajax effects.

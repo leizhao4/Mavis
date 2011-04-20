@@ -1,0 +1,48 @@
+\begin{thebibliography}{1}
+
+\bibitem{Edgar:2006aa}
+Robert~C Edgar and Serafim Batzoglou.
+\newblock Multiple sequence alignment.
+\newblock {\em Current Opinion in Structural Biology}, 16(3):368--373, June
+  2006.
+
+\bibitem{Procter2010aa}
+{JB} Procter, J~Thompson, I~Letunic, C~Creevey, F~Jossinet, and {GJ} Barton.
+\newblock Visualization of multiple alignments, phylogenies and gene family
+  evolution.
+\newblock {\em Nat Methods}, 7(3 Suppl):S16--25, 2010.
+
+\bibitem{LIN2002361}
+Kuang Lin, Alex C.~W. May, and William~R. Taylor.
+\newblock Amino acid encoding schemes from protein structure alignments:
+  Multi-dimensional vectors to describe residue types.
+\newblock {\em Journal of Theoretical Biology}, 216(3):361 -- 365, 2002.
+
+\bibitem{Thompsonaa}
+Julie~D Thompson, Toby.~J Gibson, and Des~G Higgins.
+\newblock Multiple sequence alignment using {ClustalW} and {ClustalX}.
+
+\bibitem{Penn:2010aa}
+Osnat Penn, Eyal Privman, Giddy Landan, Dan Graur, and Tal Pupko.
+\newblock An alignment confidence score capturing robustness to guide tree
+  uncertainty.
+\newblock {\em Molecular Biology and Evolution}, 27(8):1759 --1767, 2010.
+
+\bibitem{Penn:2010ab}
+O.~Penn, E.~Privman, H.~Ashkenazy, G.~Landan, D.~Graur, and T.~Pupko.
+\newblock {GUIDANCE:} a web server for assessing alignment confidence scores.
+\newblock {\em Nucleic Acids Research}, 38(Web Server):W23--W28, May 2010.
+
+\bibitem{Borg:1997aa}
+Ingwer Borg and Patrick J.~F. Groenen.
+\newblock {\em Modern multidimensional scaling: theory and applications}.
+\newblock Springer, 1997.
+
+\bibitem{McLAREN:1976aa}
+K.~{McLaren}.
+\newblock {XIII---The} development of the {CIE} 1976 {(L*} a* b*) uniform
+  colour space and colour‐difference formula.
+\newblock {\em Journal of the Society of Dyers and Colourists}, 92(9):338--341,
+  September 1976.
+
+\end{thebibliography}

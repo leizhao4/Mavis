@@ -36,7 +36,7 @@ scaleScore <- function(filename) {
 
 createLch    <- function(scaled) {
   lightness  <- 70
-  multiplier <- 150
+  multiplier <- 100
   labData    <- cbind(lightness, scaled[, 3:4] * multiplier)
   labColor   <- LAB(data.matrix(labData))
   lchColor   <- as(labColor, "polarLAB")
@@ -128,8 +128,8 @@ sortSeq    <- function(rotData) {
   for (row in 1 : nRows) {
     rowData  <- rotData[rotData[, 2] == row, ]
     rowAvg   <- angleAvg(rowData[, 5]) %% 360
-    rgbAvg   <- colorAvg(rowData)
-    sortData <- rbind(sortData, c(row, rowAvg, rgbAvg))
+    avgColor <- colorAvg(rowData)
+    sortData <- rbind(sortData, c(row, rowAvg, avgColor))
   }
   seqOrder <- sortData[order(sortData[, 2]), ]
   seqOrder <- rotSeqOrd(seqOrder)
@@ -140,7 +140,9 @@ colorAvg   <- function(lchData) { # need to be refactored
   lchColor <- polarLAB(data.matrix(lchData[, 3:5]))
   rgbColor <- as(lchColor, "RGB")
   rgbData  <- coords(rgbColor)
-  mean(data.frame(rgbData))
+  labColor <- as(rgbColor, "LAB")
+  labData  <- coords(labColor)
+  c(mean(data.frame(rgbData)), mean(data.frame(labData)))
 }
 
 outputData <- function(rotData, seqOrder) {
@@ -148,7 +150,7 @@ outputData <- function(rotData, seqOrder) {
   rgbColor <- as(lchColor, "RGB")
   rgbData  <- cbind(rotData[, 1:2], coords(rgbColor))
   write(t(rgbData),  file = FILE.COLOR, sep = "\t", ncolumns = 5)
-  write(t(seqOrder), file = FILE.ORDER, sep = "\t", ncolumns = 5)
+  write(t(seqOrder), file = FILE.ORDER, sep = "\t", ncolumns = 8)
 }
 
 scaled   <- scaleScore(FILE.SCORE)

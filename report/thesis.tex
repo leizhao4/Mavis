@@ -1,0 +1,49 @@
+\documentclass[12pt]{report}
+\usepackage{uhthesis3}
+\usepackage{epsfig}
+\usepackage{epsf}
+\input{definitions.tex}
+
+\setcounter{secnumdepth}{4}
+\begin{document}
+
+\title{\bf \large Mavis: Visualization Tool for Multiple Sequence Alignments}
+\author{Lei Zhao}
+\submitdate{May 2011} \degree{Master of Science}{Thesis}
+\adviser{Dr. Yuriy Fofanov, Chairman\\
+Department of Computer Science }
+\firstreader{Dr. Dan Graur \\
+Department of Biology and Biochemistry}
+\secondreader{Dr. Shishir Shah\\
+Department of Computer Science}
+\threereadersfalse
+\fourreadersfalse
+\fivereadersfalse
+
+\copyrightfalse \makecoverpages
+\begin{acknowledgements}
+%\input{acknowledgements.tex}
+\end{acknowledgements}
+
+\begin{abstract}
+\input {abstract.tex}
+\end{abstract}
+\setlength{\parskip}{.1 in}
+
+\makecontentspages
+
+\chapterpages
+\newif \ifFIGS
+\FIGSfalse
+
+\input{chap1_Introduction.tex}
+\input{chap2_Approach.tex}
+\input{chap3_Algorithms.tex}
+\input{chap4_Implementation.tex}
+\input{chap5_Results.tex}
+\input{chap6_Discussion.tex}
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}

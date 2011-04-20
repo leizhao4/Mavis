@@ -1,0 +1,48 @@
+% LAD definitions
+\def\vx{{\vec x}}
+\def\vxdot{{\dot\vx}} \def\vxddot{{\ddot\vx}}
+\def\tpose{^\top}
+\def\ru{{\rm u}}
+\def\vc{{\vec c}}
+\def\vrho{{{\bf p}}}
+\def\mat#1{{\bf#1}}
+\def\vec#1{{\bf#1}}
+\def\bold#1{\setbox0=\hbox{#1}
+ \kern-.025em\copy0\kern-\wd0
+ \kern.05em\copy0\kern-\wd0
+ \kern-.025em\raise.0433em\box0}
+\def\vsigma{{\bf \sigma}}
+\def\vepsilon{{\bf \epsilon}}
+\def\ssqueeze{\vspace{-0.5cm}}
+
+\def\bsqueeze{\vspace*{-0.8cm}}
+\def\bpsqueeze{\vspace*{-0.6cm}}
+\def\asqueeze{\vspace{-0.5cm}}
+
+
+\def\inv{^{-1}}
+\def\vuhat{{\hat \vec u}}
+\def\avtk{{t_{k}}}
+\def\bvtk{{t_{k+1}}}
+\def\vu{{\vec u}}
+\def\vuhat{{\hat \vec u}}
+\def\vq{{\vec q}}
+\def\vqdot{{\dot\vq}}
+\def\tpose{^\top}
+\def\mat#1{{\bf#1}}
+\def\extvec#1#2#3{{~^{#1}{\bf#2}_{#3}}}
+\def\extvecrm#1#2#3{{~^{{\rm #1}}{\bf#2}_{#3}}}
+
+\def\cavindex{{\cal V\cal I}}
+\def\caawpoint{{\extvec{\Phi}{x}{j}}}
+\def\caaipointrm{{\extvecrm{I}{x}{j}}}
+\def\caaipoint{{\extvec{I}{x}{j}}}
+
+\newcounter{lfigcounter}
+\newenvironment{IonTab}{\begin{table}[htb]}{\end{table}}
+\newenvironment{IonFig}{\setcounter{lfigcounter}{1}\begin{figure}}{\end{figure}}
+\newenvironment{IonFigH}{\setcounter{lfigcounter}{1}\begin{figure}[h]}{\end{figure}}
+\newenvironment{IonFigT}{\setcounter{lfigcounter}{1}\begin{figure}[t]}{\end{figure}}
+\def\ionbox#1{\makebox[#1]{(\alph{lfigcounter})}\stepcounter{lfigcounter}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
