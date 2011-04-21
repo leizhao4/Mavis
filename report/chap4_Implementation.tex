@@ -1,12 +1,13 @@
 \chapter{Implementation}\label{chap:Implementation}
 
-We implemented the whole visualization pipeline with an R script as back-end, a Perl CGI script as API, and an HTML/JavaScript web page as front-end.
+We implemented the entire visualization pipeline on a Mac OS X server. The implementation consists of an R script as back-end, a Perl CGI script as API, and an HTML/JavaScript web page as user interface.
 
-The R script coloring.r takes the pair-wise similarity score file as input, performs multidimensional scaling and color optimization, sorts sequences, and output colors and sequence information into two tab-separated files colors.tsv and seqinfo.tsv. The front-end web page takes an alignment ID as parameter and sends it to the API. The Perl CGI script parse the color file and sequence information file, along with the FASTA-format alignment sequences data, and sends them back to front-end in JSON format. The front-end uses JavaScript to generate the alignment matrix and render it with colors and symbol letters.
+The R script \emph{coloring.r} takes the pair-wise similarity score file as input, performs multidimensional scaling and color optimization, sorts sequences, and output colors and sequence information into two tab-separated files \emph{colors.tsv} and \emph{seqinfo.tsv}. The front-end web page takes an alignment ID as parameter and sends it to the API. The Perl CGI script parses the color file and sequence information file, along with the FASTA-format alignment file, and sends them back to front-end in JSON format \cite{crockford2006application}. The front-end uses JavaScript to generate the alignment matrix and render it with colors and symbol letters.
 
 \section{R Script}
 
-The script coloring.r begins with reading three arguments from command-line calls: score file name, colors file name and sequence information file name. The first file is for input and the latter two are for output. An example of calling this script on UNIX operating system is given below.
+The script \emph{coloring.r} begins with reading three arguments from command-line calls: score file name, colors file name and sequence information file name. The first file is for input and the latter two are for output. An example of calling this script on UNIX operating system is given below.
+\begin{verbatim} and \end{verbatim}
 Rscript coloring.r data/score.tsv data/colors.tsv data/seqinfo.tsv
 
 The file score.tsv contains four columns separated by tabs: column number, row number one, row number two, and similarity score between these two rows in this column. The row and column numbers start from one, and the similarity score values range from zero to one.

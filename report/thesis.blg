@@ -2,47 +2,46 @@ This is BibTeX, Version 0.99c (Web2C 7.5.7)
 The top-level auxiliary file: thesis.aux
 The style file: unsrt.bst
 Database file #1: references.bib
-Warning--empty journal in Thompsonaa
-Warning--empty year in Thompsonaa
-You've used 8 entries,
+Warning--empty year in Gentleman:aa
+You've used 20 entries,
             1791 wiz_defined-function locations,
-            505 strings with 5025 characters,
-and the built_in function-call counts, 1949 in all, are:
-= -- 166
-> -- 99
-< -- 0
-+ -- 36
-- -- 28
-* -- 167
-:= -- 320
-add.period$ -- 23
-call.type$ -- 8
-change.case$ -- 7
+            590 strings with 6973 characters,
+and the built_in function-call counts, 4621 in all, are:
+= -- 429
+> -- 182
+< -- 2
++ -- 70
+- -- 50
+* -- 325
+:= -- 730
+add.period$ -- 62
+call.type$ -- 20
+change.case$ -- 16
 chr.to.int$ -- 0
-cite$ -- 10
-duplicate$ -- 72
-empty$ -- 182
-format.name$ -- 28
-if$ -- 411
+cite$ -- 21
+duplicate$ -- 200
+empty$ -- 455
+format.name$ -- 50
+if$ -- 1022
 int.to.chr$ -- 0
-int.to.str$ -- 8
-missing$ -- 9
-newline$ -- 42
-num.names$ -- 8
-pop$ -- 19
+int.to.str$ -- 20
+missing$ -- 20
+newline$ -- 104
+num.names$ -- 20
+pop$ -- 49
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 25
+skip$ -- 82
 stack$ -- 0
-substring$ -- 158
-swap$ -- 7
-text.length$ -- 0
+substring$ -- 357
+swap$ -- 41
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 2
-while$ -- 19
-width$ -- 9
-write$ -- 85
-(There were 2 warnings)
+warning$ -- 1
+while$ -- 47
+width$ -- 22
+write$ -- 221
+(There was 1 warning)

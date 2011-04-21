@@ -11,14 +11,14 @@
 \contentsline {section}{\numberline {3.1}Multidimensional Scaling}{7}
 \contentsline {section}{\numberline {3.2}Color Space Mapping}{9}
 \contentsline {section}{\numberline {3.3}Hue Rotation and Optimization}{10}
-\contentsline {section}{\numberline {3.4}Hue Flipping}{11}
-\contentsline {section}{\numberline {3.5}Sequence Sorting}{12}
-\contentsline {chapter}{\numberline {4}Implementation}{13}
-\contentsline {section}{\numberline {4.1}R Script}{14}
-\contentsline {section}{\numberline {4.2}API}{15}
-\contentsline {section}{\numberline {4.3}User Interface}{15}
-\contentsline {chapter}{\numberline {5}Results}{16}
-\contentsline {section}{\numberline {5.1}Validity Test}{16}
-\contentsline {section}{\numberline {5.2}Performance Test}{17}
-\contentsline {chapter}{\numberline {6}Discussion}{18}
-\contentsline {chapter}{References}{21}
+\contentsline {section}{\numberline {3.4}Hue Flipping}{12}
+\contentsline {section}{\numberline {3.5}Sequence Sorting}{14}
+\contentsline {chapter}{\numberline {4}Implementation}{15}
+\contentsline {section}{\numberline {4.1}R Script}{16}
+\contentsline {section}{\numberline {4.2}API}{17}
+\contentsline {section}{\numberline {4.3}User Interface}{17}
+\contentsline {chapter}{\numberline {5}Results}{19}
+\contentsline {section}{\numberline {5.1}Validity Test}{19}
+\contentsline {section}{\numberline {5.2}Performance Test}{20}
+\contentsline {chapter}{\numberline {6}Discussion}{21}
+\contentsline {chapter}{References}{24}

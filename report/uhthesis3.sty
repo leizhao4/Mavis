@@ -255,7 +255,7 @@ with the `report' document style}}{}
     \end{center}}
 
 \def\copyrightpage{%
-%   \newpage
+   \newpage
         \thispagestyle{empty}%
         \setcounter{page}{1}
         \null\vskip2.5in
@@ -273,32 +273,32 @@ with the `report' document style}}{}
       \begin{center}
         \Large\uppercase\expandafter{\@title}
       \end{center}
-      \vspace{.4in}
+      \vspace{.9in}
       \rightline{\shortstack[l]{\vrule width 3.75in height 0.4pt\\
            \@author}}
-      \vspace{0.15in}
+      \vspace{.9in}
 %      \hspace{0in} \rm APPROVED:
       \rightline{ APPROVED:\hspace{2.71in} }
-      \vspace{.375in}
+      \vspace{.5in}
       \rightline{\shortstack[l]{\vrule width 3.75in height 0.4pt\\ \@adviser}}
-      \vspace{.375in}
+      \vspace{.5in}
       \rightline{\shortstack[l]{\vrule width 3.75in height 0.4pt\\ \@firstreader}}
-      \vspace{.375in}
+      \vspace{.5in}
 
       \rightline{\shortstack[l]{\vrule width 3.75in height 0.4pt\\ \@secondreader}}
-      \vspace{.375in}
+      \vspace{.5in}
       \ifthreereaders
         \rightline{\shortstack[l]{\vrule width 3.75in height 0.4pt\\ \@thirdreader}}
+        \vspace{.5in}
       \fi
-      \vspace{.375in}
       \iffourreaders
         \rightline{\shortstack[l]{\vrule width 3.75in height 0.4pt\\ \@fourthreader}}
+        \vspace{.5in}
       \fi
-      \vspace{.375in}
       \iffivereaders
         \rightline{\shortstack[l]{\vrule width 3.75in height 0.4pt\\ \@fifthreader}}
+        \vspace{.5in}
       \fi
-      \vspace{.4in}
       
       \rightline{\shortstack[l]{\vrule width 3.75in height 
                  0.4pt\\Dean, \expandafter{\@college}}}}
@@ -343,9 +343,11 @@ with the `report' document style}}{}
             \def\baselinestretch{1.6}\@normalsize
             \abstractp
             \newpage
-            \begin{center}
-                  \Huge \bf Abstract
-            \end{center}}
+            \chapter*{Abstract}
+            %\begin{center}
+            %      \Huge \bf Abstract
+            %\end{center}
+}
 
 \def\endabstract{
                  \def\baselinestretch{1.7}\@normalsize}
@@ -353,9 +355,11 @@ with the `report' document style}}{}
 %Acknowledgements
 \def\acknowledgements{
             \newpage
-            \begin{center}
-            \Huge {\ }  % \bf Acknowledgements
-            \end{center}}
+            \chapter*{Acknowledgements}
+            %\begin{center}
+            %  \Huge \bf Acknowledgements
+            %\end{center}
+}
 
 %\def\endacknowledgements{}
 

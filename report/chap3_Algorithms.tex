@@ -1,62 +1,79 @@
 \chapter{Algorithms}\label{chap:Algorithms}
 
-The algorithm of color computation consists of five stages. First, multidimensional scaling reduces the number of dimensions and convert the confidence/similarity scores into coordinates. Second, coordinates are mapped onto part of the CIE Lab color space\cite {McLAREN:1976aa}, and colors are created. Third, colors are flipped and rotated to smooth the graph and remove color noises. Finally, calculate the average color/hue of each sequence, sort them, and output for further display.
+The algorithm of color computation consists of five stages. First, multidimensional scaling reduces the number of dimensions and convert the confidence/similarity scores into coordinates. Second, coordinates are mapped onto part of the \emph{CIE Lab color space} \cite {McLAREN:1976aa}, and colors are created. Third, colors are flipped and rotated to smooth the graph and remove color noises. Finally, calculate the average color/hue of each sequence, sort them, and output for further display.
 
 \section{Multidimensional Scaling}
 
-This stage begins with the confidence scores described above. Each column in the MSA has a complete set $C$ of pairwise scores. Each pair of non-gap symbols $i,j$ in this column has a score $c_{ij} \in [0,1]$. Here 1 stands for absolute confidence or similarity, while 0 for the opposite.
+This stage begins with the confidence scores described above. Each column in the MSA has a complete set $C$ of pairwise scores. Each pair of non-gap symbols $i,j$ in this column has a score $c_{i,j}=c_{j,i} \in [0,1]$. Here 1 stands for absolute confidence or similarity, while 0 for the opposite.
 
-This set $C$ can be easily converted to a dissimilarity score, or a distance $D$, between the two symbols, by $D=1-S$. All these distances within a column can be re-organized as a symmetric distance matrix.
+This dataset can be easily converted to a set $D$ of dissimilarities or distances between two symbols, by $$d_{i,j}=d_{j,i}=1-c_{i,j}$$
 
-We try to map all the symbols to a two-dimensional space, in which they still preserve their distances as much as possible. This procedure involves a statistical technique called classic multidimensional scaling, also known as Torgerson-Gower Scaling or Principle Coordinates Analysis (Gower, 1966). Multidimensional scaling takes a distance matrix and assigns a coordinate to each item in a lower dimensional space, such that the Euclidean distance between any two coordinates is approximately equal to the dissimilarity score between the corresponding items.
+These distance values are re-organized as an $n \times n$ symmetric distance matrix $M$
+\[ \begin{array}{cccccc}
+            & \mbox{1}  & \mbox{2}  & \mbox{3}  & \mbox{...}  & n       \\
+\mbox{1}    & 0         & d_{1,2}   & d_{1,3}   & \cdots      & d_{1,n} \\
+\mbox{2}    & d_{2,1}   & 0         & d_{2,3}   & \cdots      & d_{2,n} \\
+\mbox{3}    & d_{3,1}   & d_{3,2}   & 0         & \cdots      & d_{3,n} \\
+\cdots      & \cdots    & \cdots    & \cdots    & \cdots      & \cdots  \\
+n           & d_{n,1}   & d_{n,2}   & d_{n,3}   & \cdots      & 0 \end{array} \]
+where $n$ is the number of non-gap symbols in the current column.
 
-An R function called cmdscale() is utilized in the multidimensional scaling procedure. The function is written in R, which is a programming language for statistical computing (Ihaka and Gentleman 1996), and is provided in R’s stat package. It reads a distance matrix and returns a set of points in a k-dimensional space, where k is a user-defined parameter to the function, and must be less than the number of points. (Becker et al. 1988, Cailliez 1983, Cox and Cox 2001)
+These $n$ symbols are placed into a two-dimensional space, in which the distances between each other are still preserved as much as possible. This procedure involves a statistical technique called \emph{classical multidimensional scaling (classical MDS)}, also known as \emph(Torgerson-Gower scaling) or \emph{principle coordinates analysis (PCoA)} \cite{GOWER01121966}. Multidimensional scaling takes a distance matrix and assigns a coordinate to each item in a lower dimensional space, such that the Euclidean distance between any two coordinates is approximately equal to the original distance value between the corresponding items.
 
-Here is our approach, k is set to 2, meaning the distance matrix should be scaled to a two-dimensional space. However, a column in a multiple sequence alignment, which represents an equivalent position across all the sequences, can contain only one or two non-gap symbols, so that the column has only one or two points. In such cases, k=2 is not a valid parameter because k must be less than the number of points, so k should be set to zero (for one point) or one (for two points), and the missing coordinates should be filled by zeros.
+An statistical function called \emph{cmdscale()} \cite{R2009aa} is utilized in this multidimensional scaling procedure. This function is written in R, which is a programming language for statistical computing \cite{Gentleman:aa}, and is provided in R’s stat package. It reads a distance matrix and returns a set of points in a $k$-dimensional space, where $k$ is a user-defined parameter to the function, and must be less than the number of points $n$. \cite{Cailliez:1983aa,Cox:2008aa}
 
-The input data set represents the similarities between symbols, while the multidimensional scaling procedure requires the dissimilarities (or distances). We simply convert similarity (S) to dissimilarity (D) by D = 1 - S and pass the converted matrix to the cmdscale() function.
+In our approach, $k$ is set to 2, meaning the distance matrix is scaled down to a two-dimensional space. However, a column of an MSA may have as few as one or two non-gap symbols, so that the distance matrix of this column is only $1 \times 1$ or $2 \times 2$. In such cases, $k=2$ will not be a valid parameter to \emph{cmdscale()} because of the $k<n$ requirement. So we let
+\[
+k = \left\{ \begin{array}{ll}
+0 & \mbox{if $n=1$} \\
+1 & \mbox{if $n=2$} \\
+2 & \mbox{otherwise}
+\end{array}
+\right.
+\]
+
+Then we perform the multidimensional scaling on the distance matrix $M$. When $n<2$, the generated coordinates are lower than two-dimensional, and the missing coordinate values are filled by zeros.
 
 \section{Color Space Mapping}
 
-The multidimensional scaling procedure returns a set C of coordinates on a two-dimensional space, representing the symbols in a multiple sequence alignment. We further map this two-dimensional space into an three-dimensional CIE Lab color space.
+The above procedure returns a set $P$ of $n$ coordinates $(x,y)$ in a two-dimensional space, representing the $n$ symbols in a column of a multiple sequence alignment. This two-dimensional space is further mapped to a three-dimensional color space.
 
-The CIE Lab color space is a color-opponent space. The name Lab stands for the three dimensions: L for lightness, and a and b for the color opponents based on nonlinearly compressed CIE XYZ color space coordinates. Compared to the RGB and CMYK color models, the design of Lab color emphasizes more on approximating human vision rather than physical devices. This feature makes it suitable for our visualization purpose.
+The CIE Lab color space \cite {McLAREN:1976aa} is a color-opponent space. The name \emph{Lab} stands for the three dimensions: $L$ for lightness, and $a$ and $b$ for the color opponents based on nonlinearly compressed \emph{CIE XYZ color space} coordinates \cite{CIE:1932aa,Smith:1931aa}. Compared to the \emph{RGB} and \emph{CMYK} color models, the design of Lab color emphasizes more on approximating human vision rather than physical devices. This feature makes it suitable for our visualization purpose. \cite{Margulis:2005aa}
 
-Since the data set C from the previous procedure contains only two-dimensional coordinates, and we only use the most visible colors instead of the whole color space, the dimension L for lightness is set to 75. The two dimensions from data set C are scaled from [0,1] to [0, 100] and used as color opponents a and b.
+Coordinates in $P$ have only two dimensions $x$ and $y$. To map $P$ to the three-dimensional CIE Lab space, $L$ for lightness is set to a fixed value 75, and two other dimensions $a$ and $b$ are assigned as $x$ and $y$ scaled from $[0,1]$ to $[0, 100]$. $$a=x*100$$ $$b=y*100$$
+
+At the end of this step, $n$ CIE Lab colors $(L, a, b)$ are created.
 
 \section{Hue Rotation and Optimization}
 
-One of the limitations in the previous multiple sequence alignment visualization techniques is the unnecessary color difference among columns, which doesn’t represent any biological dissimilarity but introduces much confusion to the analysis. To minimize this effect, we convert the colors from CIE Lab space to CIE LCH space, perform rotations and minimize the the sum of hue variances of all the sequences. This procedure eliminates between-column color differences to the greatest extent possible, smooth the color pattern and emphasize the real similarities and dissimilarities among sequences and blocks.
+One of the limitations in many previous MSA visualization techniques is, they introduced unnecessary confusion by using a fixed color scheme. Even for exactly same aligned columns, colors may be totally different, which won't represent any biological dissimilarities. To minimize this effect, we convert the colors from CIE Lab space to \emph{CIE LCH space}, and perform rotations to eliminate noisy colors to the greatest extent possible. In this way, we smooth the color pattern and emphasize the real similarities and dissimilarities among sequences and blocks.
 
-The CIE LCH color space, also known as polar-Lab color space, is a transformation of the CIE Lab space so that the a and b axles are converted to a polar coordinate system, which makes it easier to rotate. The radial coordinate C measures chroma and the angular coordinate H measures hue. The CIE LCH colors can be converted from CIE Lab colors using an R library called colorspace.
+The \emph{CIE LCH color space}, also known as polar-Lab color space, is a cylindrical transformation of the CIE Lab space so that the a and b axles are converted to a polar coordinate system. The radial coordinate $C$ measures \emph{chroma} and the angular coordinate $H$ measures \emph{hue}. LCH space makes it easier to rotate colors, by changing their \emph{hue} value. The CIE LCH colors can be converted from CIE Lab colors using an R library called \emph{colorspace} \cite{Ihaka:2009aa,Zeileis:2009aa}.
 
-The fact that 0 and 2π are identical angles, so that given two angles p and q, the difference between them can be calculated by
-diff(t1, t2) = (p - q + π) mod 2π - π
-This gives the difference in the interval [-π, π), or in degrees [-180°, 180°). The absolute value of the difference is in the interval [0, π], or in degrees [0, 180°]. Given a set A of angles a[i], i>=0, the average angle avg(A) is
+Hue values are circular, meaning $0$ and $2\pi$ are identical. Given two angles $p$ and $q$, the difference between them is given by $$\mathrm{diff}(p,q) = (p - q + \pi) \bmod 2\pi - \pi$$ This calculation returns the difference in the interval $[-\pi, \pi)$, or in degrees $[-180^{\circ}, 180^{\circ})$. The absolute value of the difference $$|\mathrm{diff}(p,q)| = |(p - q + \pi) \bmod 2\pi - \pi|$$ returns in the interval $[0, \pi]$, or in degrees $[0^{\circ}, 180^{\circ}]$.
 
-%                                   sum_i_from_1_to_N sin(a[i])
-%avg(A) = arctangent ---------------------------------------
-%                                   sum_i_from_1_to_N cos(a[i])
+Given a set $A$ of angles $a_i$, the average angle $\overline{A}$ is $$\overline{A}=\arctan{\frac{\displaystyle\sum_{i=1}^n \sin{a_i}}{\displaystyle\sum_{i=1}^n \cos{a_i}}}$$ and the variance $\mathrm{Var}(A)$ is $$\mathrm{Var}(A)=\frac{\displaystyle\sum_{i=1}^n \mathrm{diff}(\overline{A}-a_i)^2}{n}$$
 
-and the variance var(A) is
-%var(A) = sum_i_from_1_to_N(diff(a, a[i]) ^ 2) / N
+Given a colored MSA $Z$ with $m$ rows and $n$ columns, to estimate its overall noise level, a penalty function $\mathrm{pen}(Z)$ is defined by $$\mathrm{pen}(Z)=\displaystyle\sum_{j=1}^m \mathrm{Var}(h_{1j},h_{2j},\cdots,h_{nj})$$ where $h_{ij}$ is the hue value of the symbol at the $i$th column and $j$th row.
 
-Given an multiple sequence alignment M, with m rows and n columns, we look for a optimized set R of n rotation angles r[i], such that after rotating each hue in the ith column of the alignment clockwise by r[i], then the penalty function
-%P = sum_j_from_1_to_m(var(all hues in the jth row))
-is minimized.
+We look for an optimized set $R$ of $n$ rotation angles $r_i$, such that after rotating each hue in every $i$th column of $Z$ clockwise by $r_i$, the rotated MSA $Z^\prime$ achieves the minimized return value of the penalty function $\mathrm{pen}(Z^\prime)$.
 
-The optimization procedure is performed with R’s general-purpose optimization function optim(). Among five available optimization algorithms, we choose the bounded Broyden-Fletcher-Goldfarb-Shanno (L-BFGS-B) method. This algorithm allows box constraints, meaning each variable can be given a lower and/or upper bound. Plus, it uses a limited amount of memory. The initial values are set to 0 and boundaries to [0, 2π]. More detailed comparison between different optimization functions and algorithms will be discussed later in Chapter 6.
+The optimization procedure is performed by R's general-purpose optimization function \emph{optim()} \cite{R2009aa}. Among five available optimization algorithms provided by this function, we choose the \emph{bounded Broyden-Fletcher-Goldfarb-Shanno} (L-BFGS-B) method \cite{Byrd:1995aa}. This algorithm allows box constraints, meaning each variable can be given a lower and/or upper bound. Plus, it uses a limited amount of memory. The initial values are set to 0 and boundaries to $[0, 2\pi]$. More detailed comparison between different optimization functions and algorithms will be discussed later in Chapter 6.
 
 \section{Hue Flipping}
 
-One characteristic of the coordinates generated from multidimensional scaling is, they can not only be rotated, but also flipped, without changing the distances from each other. Adding flipping ability to the above rotation optimization procedure may result in lower penalty values and better coloring results. To keep the penalty function simple and fast, we perform an heuristic flipping before the rotation step.
+One characteristic of the coordinates generated from multidimensional scaling is, they can not only be rotated, but also flipped, without changing the distances between each other. Adding flipping ability to the above rotation optimization procedure may result in lower minimal penalty values and better coloring results. To keep the penalty function simple and fast, we perform a heuristic flipping \emph{before} the rotation step.
 
-For each ith column (2 <= i <= n), compare it to the previous one. Pick rows which exists in both columns and record the hues in two arrays H1 and H2. For each of the two arrays, compare each hue to the previous one using the diff() function described above. For each diff() > π/8, record a clockwise change; for each diff() < -π/8, record a counterclockwise change; otherwise leave it as an insignificant change. Within a column, if the number of clockwise changes is greater than the number of counterclockwise ones, call it a clockwise column, and vice versa. If two adjacent columns are in opposite types, flip the latter one to make them in same type.
+For each pair of adjacent columns $C_i$ and $C_{i+1}$, $1 \le i \le n-1$, compare their hues row by row. Rows with gaps in these two columns are not take into consideration. For those rows with non-gap symbols on both sides, record their hue values $$h_{i,1},h_{i+1,1},h_{i,2},h_{i+1,2},\cdots,h_{i,k},h_{i+1,k}$$ into two lists $H_i$ and $H_{i+1}$: $$H_i=h_{i,1},h_{i,2},\cdots,h_{i,k}$$ $$H_{i+1}=h_{i+1,1},h_{i+1,2},\cdots,h_{i+1,k}$$
 
-After comparisons of all adjacent column pairs have been finished, no two pairs will be in opposite types, and the flipped data set is passed to the optimization procedure described above.
+In both lists, compare two neighboring hue values $h_{i,j}$ and $h_{i,j+1}$, $1\le j\le k-1$, using diff$()$ function described in section 3.3. If diff$(h_{i,j},h_{i,j+1})<-\frac{\pi}{8}$, the change from $h_{i,j}$ to $h_{i,j+1}$ is called a \emph{clockwise change}; if diff$(h_{i,j},h_{i,j+1})>\frac{\pi}{8}$, the change is called a \emph{counterclockwise change}; otherwise, it's considered to be unchanged.
+
+If a column contains more clockwise changes than counterclockwise changes, it's called \emph{clockwise column}; if it contains more counterclockwise changes, it's called \emph{counterclockwise column}; otherwise, it's a neutral column. Note that since gap rows are filtered out of the comparison, the type of a column may change when compared to different adjacent columns. For instance, a column may be clockwise compared to the previous column, and counterclockwise compared to the next column.
+
+If two adjacent columns are in opposite types, flip the latter one to make them in same type. Then the flipped alignment are sent back to the procedure discussed in section 3.3.
 
 \section{Sequence Sorting}
 
-The alignment graph is supposed to provide information on how sequences will group with each other. We sort sequences after coloring optimization, based on the average hue of each one, which is calculated by the average angle function avg() proposed previously.
+The alignment graph is supposed to provide information on how sequences will group with each other. We sort sequences after coloring optimization, based on the average hue of each one, which is calculated by the average angle function proposed previously in section 3.3.
 
-Since the hue value is circular, where to break the sorted circle is a question. In the circle, we look for the biggest gap without any points in it, and break it at the midpoint. This keeps similar sequences together as much as possible.
+The fact that hue values are circular, results in an additional question on where to cut the circle to get a sorted list of sequences. In a sorted circle of $n$ average hue values, $h_1,h_2,\cdots,h_n$, we calculate the absolute difference between each pair of adjacent ones ($h_1$ is adjacent to $h_n$). $$\Delta h_{1,2}=|\mathrm{diff}(h_1,h_2)|$$ $$\Delta h_{2,3}=|\mathrm{diff}(h_2,h_3)|$$ $$\cdots$$ $$\Delta h_{n,1}=|\mathrm{diff}(h_n,h_1)|$$ Then, the circle is split at the biggest gap $$\Delta h_{max}=\Delta h_{i,i+1}=|\mathrm{diff}(h_i,h_{i+1})|$$ to best avoid separating similar sequences.

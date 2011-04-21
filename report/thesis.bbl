@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{Edgar:2006aa}
 Robert~C Edgar and Serafim Batzoglou.
@@ -19,8 +19,10 @@ Kuang Lin, Alex C.~W. May, and William~R. Taylor.
 \newblock {\em Journal of Theoretical Biology}, 216(3):361 -- 365, 2002.
 
 \bibitem{Thompsonaa}
-Julie~D Thompson, Toby.~J Gibson, and Des~G Higgins.
-\newblock Multiple sequence alignment using {ClustalW} and {ClustalX}.
+J.~D. Thompson, T.~J. Gibson, and D.~G. Higgins.
+\newblock Multiple sequence alignment using {ClustalW} and {ClustalX.}
+\newblock {\em Current protocols in bioinformatics/editoral board, Andreas D.
+  Baxevanis...[et al.]}, pages Unit--2, 2002.
 
 \bibitem{Penn:2010aa}
 Osnat Penn, Eyal Privman, Giddy Landan, Dan Graur, and Tal Pupko.
@@ -44,5 +46,71 @@ K.~{McLaren}.
   colour space and colour‐difference formula.
 \newblock {\em Journal of the Society of Dyers and Colourists}, 92(9):338--341,
   September 1976.
+
+\bibitem{GOWER01121966}
+J.~C. Gower.
+\newblock Some distance properties of latent root and vector methods used in
+  multivariate analysis.
+\newblock {\em Biometrika}, 53(3-4):325--338, 1966.
+
+\bibitem{R2009aa}
+{R Development Core Team}.
+\newblock {\em R: A Language and Environment for Statistical Computing}.
+\newblock R Foundation for Statistical Computing, Vienna, Austria, 2009.
+\newblock {ISBN} 3-900051-07-0.
+
+\bibitem{Gentleman:aa}
+R.~Gentleman and Ihaka.
+\newblock R: A language for data analysis and graphics.
+\newblock {\em Journal Of Computational And Graphical Statistics},
+  5(3):299--314.
+
+\bibitem{Cailliez:1983aa}
+Francis Cailliez.
+\newblock The analytical solution of the additive constant problem.
+\newblock {\em Psychometrika}, 48(2):305--308, June 1983.
+
+\bibitem{Cox:2008aa}
+Michael A.~A. Cox and Trevor~F. Cox.
+\newblock Multidimensional scaling.
+\newblock In {\em Handbook of Data Visualization}, pages 315--347. Springer
+  Berlin Heidelberg, Berlin, Heidelberg, 2008.
+
+\bibitem{CIE:1932aa}
+{CIE}.
+\newblock {\em Commission internationale de {l'Eclairage} proceedings, 1931}.
+\newblock {[[Cambridge} University Press]], Cambridge, 1932.
+
+\bibitem{Smith:1931aa}
+{\&\#32;Thomas}~Smith.
+\newblock The {C.I.E.} colorimetric standards and their use.
+\newblock {\em Transactions of the Optical Society}, 33(3):73--134, 1931.
+
+\bibitem{Margulis:2005aa}
+D.~Margulis.
+\newblock {\em Photoshop {LAB} color: The canyon conundrum and other adventures
+  in the most powerful colorspace}.
+\newblock Peachpit Press Berkeley, {CA,} {USA}, 2005.
+
+\bibitem{Ihaka:2009aa}
+Ross Ihaka, Paul Murrell, Kurt Hornik, and Achim Zeileis.
+\newblock {\em {colorspace}: Color Space Manipulation}, 2009.
+\newblock R package version 1.0-1.
+
+\bibitem{Zeileis:2009aa}
+Achim Zeileis, Kurt Hornik, and Paul Murrell.
+\newblock Escaping {RGB}land: Selecting colors for statistical graphics.
+\newblock {\em Computational Statistics \& Data Analysis}, 53:3259--3270, 2009.
+
+\bibitem{Byrd:1995aa}
+R.~H Byrd, P.~Lu, J.~Nocedal, and C.~Zhu.
+\newblock A limited memory algorithm for bound constrained optimization.
+\newblock {\em {SIAM} Journal on Scientific Computing}, 16:1190, 1995.
+
+\bibitem{crockford2006application}
+D.~Crockford.
+\newblock {The application/json media type for javascript object notation
+  (json)}.
+\newblock Technical report, RFC 4627, July, 2006.
 
 \end{thebibliography}
