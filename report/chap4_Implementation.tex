@@ -7,20 +7,60 @@ The R script \emph{coloring.r} takes the pair-wise similarity score file as inpu
 \section{R Script}
 
 The script \emph{coloring.r} begins with reading three arguments from command-line calls: score file name, colors file name and sequence information file name. The first file is for input and the latter two are for output. An example of calling this script on UNIX operating system is given below.
-\begin{verbatim} and \end{verbatim}
-Rscript coloring.r data/score.tsv data/colors.tsv data/seqinfo.tsv
+\begin{verbatim}
+  Rscript coloring.r data/score.tsv data/colors.tsv data/seqinfo.tsv
+\end{verbatim}
 
-The file score.tsv contains four columns separated by tabs: column number, row number one, row number two, and similarity score between these two rows in this column. The row and column numbers start from one, and the similarity score values range from zero to one.
+The file \emph{score.tsv} contains four columns separated by tabs: column number, row number one, row number two, and similarity score between these two rows in this column. The row and column numbers start from 1, and the similarity score values range from 0 to 1. Here are a few example lines in a \emph{score.tsv} file.
+\def\baselinestretch{1}
+\begin{verbatim}
+  #COL_NUMBER   #ROW_NUMBER_1   #ROW_NUMBER_2   #RES_PAIR_HIT/NALT
+  1             1               2               1.000000
+  1             1               6               0.933333
+  1             1               10              0.866667
+  1             2               6               0.933333
+  1             2               10              0.866667
+  1             6               10              0.133333
+  2             1               6               1.000000
+  2             1               10              1.000000
+  2             6               10              1.000000
+\end{verbatim}
 
-The script coloring.r consists of four parts. The first part reads the input file, performs multidimensional scaling and create color for each symbol in the CIE LCH space. The second part rotates and flips color hues and optimize the penalty function. The third part sorts the sequences by their average hues and calculates each sequence’s average RGB color. The last part outputs the symbol colors and sequence information into corresponding files.
+The script \emph{coloring.r} consists of four parts. The first part reads the input file, performs multidimensional scaling and create color for each symbol in the CIE LCH space. The second part rotates and flips color hues and optimize the penalty function. The third part sorts the sequences by their average hues and calculates each sequence’s average RGB color. The last part outputs the symbol colors and sequence information into corresponding files.
 
-The color file colors.tsv has five columns separated by tabs: column number, row number, and the symbol color in RGB triplet (red, green, blue) in the range from 0 to 1, which will be converted into hexadecimal format used in HTML and JavaScript. The sequence information file seqinfo.tsv also has five columns: row number, average hue from 0 to 360 degrees, average color in RGB triplet.
+The color file \emph{colors.tsv} has five columns separated by tabs: column number, row number, and the symbol color in RGB triplet (red, green, blue) in the range from 0 to 1, which will be converted into hexadecimal format used in the user interface module. The sequence information file seqinfo.tsv also has five columns: row number, average hue from 0 to 360 degrees, average color in RGB triplet. A typical \emph{color.tsv} file looks like:
+\def\baselinestretch{1}
+\begin{verbatim}
+1       1       0.1065524      0.5616907       0.3943046
+1       2       0.106256       0.5616652       0.3936842
+1       6       0.1065487      0.5616904       0.3942968
+1       10      0.1065581      0.5616912       0.3943165
+2       1       0.09057406     0.5677889       0.2867890
+2       2       0.09057406     0.5677889       0.2867890
+2       6       0.09057406     0.5677889       0.2867890
+2       10      0.09057406     0.5677889       0.2867890
+3       1       0.07634505     0.5664451       0.2581746
+3       6       0.1113592      0.570106        0.3250781
+3       10      0.07634505     0.5664451       0.2581746
+\end{verbatim}
 
 \section{API}
 
-A Perl CGI script api.pl and a Perl package Mavis::API act as the API between the R back-end and HTML/JavaScript front-end. The Perl CGI api.pl takes two parameters from HTTP requests, ‘action’ and ‘id’. The default action is ‘alignment’, meaning the alignment information, including sequences, colors, average colors and order of sequences. In this action, an additional ‘id’ parameter must be provided as the alignment ID. Another available action is ‘list’, which requests all existing alignment IDs.
+A Perl CGI script \emph{api.pl} and a Perl package \emph{Mavis::API} act as the API between the R back-end and HTML/JavaScript front-end. The Perl CGI \emph{api.pl} takes two parameters from HTTP requests, \emph{action} and \emph{id}. The default action is \emph{alignment}, meaning the alignment information, including sequences, colors, average colors and order of sequences, should be returned. In this action, an additional \emph{id} parameter is expected as the alignment ID. Another available action is \emph{list}, which requests a list of all existing alignment IDs.
 
-The API returns the query result to the web page in JSON (JavaScript Object Notation) format, which is a lightweight text-based data-interchange standard. JSON is derived from a subset of JavaScript syntax and can be easily parsed in JavaScript as well as many other languages, like Perl. We included the Perl JSON 2.51 module to provide JSON encoding/decoding ability to our API.
+The API returns the query result to the web page in JSON (JavaScript Object Notation) format, which is a lightweight text-based data-interchange standard. JSON is derived from a subset of JavaScript syntax and can be easily parsed in JavaScript as well as many other languages, like Perl. We included the Perl JSON 2.51 module to provide JSON encoding/decoding ability to our API. \cite{crockford2006application}
+
+This is an example of the API response in JSON format:
+\def\baselinestretch{1}
+\begin{verbatim}
+  { "status"    : 1,
+    "id"        : "demo",
+    "colors"    : [ ["#666","#666","#666","#666"],
+                    ["#665","#667","#667","#665"]],
+    "sequences" : [ {"name":"Seq02", "color":"#26e", "seq":"DEMO"},
+                    {"name":"Seq01", "color":"#26e", "seq":"DEMO"}]
+  }
+\end{verbatim}
 
 \section{User Interface}
 

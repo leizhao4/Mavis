@@ -1,116 +1,113 @@
 \begin{thebibliography}{10}
 
 \bibitem{Edgar:2006aa}
-Robert~C Edgar and Serafim Batzoglou.
-\newblock Multiple sequence alignment.
-\newblock {\em Current Opinion in Structural Biology}, 16(3):368--373, June
-  2006.
+R.~C. Edgar and S.~Batzoglou, ``Multiple sequence alignment,'' {\em Current
+  Opinion in Structural Biology}, vol.~16, no.~3, pp.~368--373, 2006.
 
 \bibitem{Procter2010aa}
-{JB} Procter, J~Thompson, I~Letunic, C~Creevey, F~Jossinet, and {GJ} Barton.
-\newblock Visualization of multiple alignments, phylogenies and gene family
-  evolution.
-\newblock {\em Nat Methods}, 7(3 Suppl):S16--25, 2010.
+J.~Procter, J.~Thompson, I.~Letunic, C.~Creevey, F.~Jossinet, and G.~Barton,
+  ``Visualization of multiple alignments, phylogenies and gene family
+  evolution,'' {\em Nature Methods}, vol.~7, no.~3 Suppl, pp.~S16--25, 2010.
 
 \bibitem{LIN2002361}
-Kuang Lin, Alex C.~W. May, and William~R. Taylor.
-\newblock Amino acid encoding schemes from protein structure alignments:
-  Multi-dimensional vectors to describe residue types.
-\newblock {\em Journal of Theoretical Biology}, 216(3):361 -- 365, 2002.
+K.~Lin, A.~C.~W. May, and W.~R. Taylor, ``Amino acid encoding schemes from
+  protein structure alignments: multi-dimensional vectors to describe residue
+  types,'' {\em Journal of Theoretical Biology}, vol.~216, no.~3, pp.~361 --
+  365, 2002.
 
 \bibitem{Thompsonaa}
-J.~D. Thompson, T.~J. Gibson, and D.~G. Higgins.
-\newblock Multiple sequence alignment using {ClustalW} and {ClustalX.}
-\newblock {\em Current protocols in bioinformatics/editoral board, Andreas D.
-  Baxevanis...[et al.]}, pages Unit--2, 2002.
+J.~D. Thompson, T.~J. Gibson, and D.~G. Higgins, ``Multiple sequence alignment
+  using {ClustalW} and {ClustalX.},'' {\em Current Protocols in
+  Bioinformatics}, p.~2.3, 2002.
 
 \bibitem{Penn:2010aa}
-Osnat Penn, Eyal Privman, Giddy Landan, Dan Graur, and Tal Pupko.
-\newblock An alignment confidence score capturing robustness to guide tree
-  uncertainty.
-\newblock {\em Molecular Biology and Evolution}, 27(8):1759 --1767, 2010.
+O.~Penn, E.~Privman, G.~Landan, D.~Graur, and T.~Pupko, ``An alignment
+  confidence score capturing robustness to guide tree uncertainty,'' {\em
+  Molecular Biology and Evolution}, vol.~27, no.~8, pp.~1759 --1767, 2010.
 
 \bibitem{Penn:2010ab}
-O.~Penn, E.~Privman, H.~Ashkenazy, G.~Landan, D.~Graur, and T.~Pupko.
-\newblock {GUIDANCE:} a web server for assessing alignment confidence scores.
-\newblock {\em Nucleic Acids Research}, 38(Web Server):W23--W28, May 2010.
+O.~Penn, E.~Privman, H.~Ashkenazy, G.~Landan, D.~Graur, and T.~Pupko,
+  ``{GUIDANCE:} a web server for assessing alignment confidence scores,'' {\em
+  Nucleic Acids Research}, vol.~38, no.~Web Server, pp.~W23--W28, 2010.
 
 \bibitem{Borg:1997aa}
-Ingwer Borg and Patrick J.~F. Groenen.
-\newblock {\em Modern multidimensional scaling: theory and applications}.
+I.~Borg and P.~J.~F. Groenen, {\em Modern multidimensional scaling: theory and
+  applications}.
 \newblock Springer, 1997.
 
 \bibitem{McLAREN:1976aa}
-K.~{McLaren}.
-\newblock {XIII---The} development of the {CIE} 1976 {(L*} a* b*) uniform
-  colour space and colour‐difference formula.
-\newblock {\em Journal of the Society of Dyers and Colourists}, 92(9):338--341,
-  September 1976.
+K.~{McLaren}, ``{XIII---The} development of the {CIE} 1976 {(L*} a* b*) uniform
+  colour space and colour‐difference formula,'' {\em Journal of the Society
+  of Dyers and Colourists}, vol.~92, no.~9, pp.~338--341, 1976.
 
 \bibitem{GOWER01121966}
-J.~C. Gower.
-\newblock Some distance properties of latent root and vector methods used in
-  multivariate analysis.
-\newblock {\em Biometrika}, 53(3-4):325--338, 1966.
+J.~C. Gower, ``Some distance properties of latent root and vector methods used
+  in multivariate analysis,'' {\em Biometrika}, vol.~53, no.~3-4, pp.~325--338,
+  1966.
 
 \bibitem{R2009aa}
-{R Development Core Team}.
-\newblock {\em R: A Language and Environment for Statistical Computing}.
+{R Development Core Team}, {\em R: a language and environment for statistical
+  computing}.
 \newblock R Foundation for Statistical Computing, Vienna, Austria, 2009.
 \newblock {ISBN} 3-900051-07-0.
 
 \bibitem{Gentleman:aa}
-R.~Gentleman and Ihaka.
-\newblock R: A language for data analysis and graphics.
-\newblock {\em Journal Of Computational And Graphical Statistics},
-  5(3):299--314.
+R.~Gentleman and R.~Ihaka, ``R: a language for data analysis and graphics,''
+  {\em Journal Of Computational And Graphical Statistics}, vol.~5, no.~3,
+  pp.~299--314, 1996.
 
 \bibitem{Cailliez:1983aa}
-Francis Cailliez.
-\newblock The analytical solution of the additive constant problem.
-\newblock {\em Psychometrika}, 48(2):305--308, June 1983.
+F.~Cailliez, ``The analytical solution of the additive constant problem,'' {\em
+  Psychometrika}, vol.~48, no.~2, pp.~305--308, 1983.
 
 \bibitem{Cox:2008aa}
-Michael A.~A. Cox and Trevor~F. Cox.
-\newblock Multidimensional scaling.
-\newblock In {\em Handbook of Data Visualization}, pages 315--347. Springer
-  Berlin Heidelberg, Berlin, Heidelberg, 2008.
+M.~A.~A. Cox and T.~F. Cox, ``Multidimensional scaling,'' in {\em Handbook of
+  Data Visualization}, pp.~315--347, Berlin, Heidelberg: Springer Berlin
+  Heidelberg, 2008.
 
 \bibitem{CIE:1932aa}
-{CIE}.
-\newblock {\em Commission internationale de {l'Eclairage} proceedings, 1931}.
-\newblock {[[Cambridge} University Press]], Cambridge, 1932.
+C.I.E., {\em Commission internationale de {l'Eclairage} proceedings, 1931}.
+\newblock Cambridge University Press, Cambridge, 1932.
 
 \bibitem{Smith:1931aa}
-{\&\#32;Thomas}~Smith.
-\newblock The {C.I.E.} colorimetric standards and their use.
-\newblock {\em Transactions of the Optical Society}, 33(3):73--134, 1931.
+T.~Smith, ``The {C.I.E.} colorimetric standards and their use,'' {\em
+  Transactions of the Optical Society}, vol.~33, no.~3, pp.~73--134, 1931.
 
 \bibitem{Margulis:2005aa}
-D.~Margulis.
-\newblock {\em Photoshop {LAB} color: The canyon conundrum and other adventures
-  in the most powerful colorspace}.
+D.~Margulis, {\em Photoshop {LAB} color: The canyon conundrum and other
+  adventures in the most powerful colorspace}.
 \newblock Peachpit Press Berkeley, {CA,} {USA}, 2005.
 
 \bibitem{Ihaka:2009aa}
-Ross Ihaka, Paul Murrell, Kurt Hornik, and Achim Zeileis.
-\newblock {\em {colorspace}: Color Space Manipulation}, 2009.
+R.~Ihaka, P.~Murrell, K.~Hornik, and A.~Zeileis, {\em {colorspace}: color space
+  manipulation}, 2009.
 \newblock R package version 1.0-1.
 
 \bibitem{Zeileis:2009aa}
-Achim Zeileis, Kurt Hornik, and Paul Murrell.
-\newblock Escaping {RGB}land: Selecting colors for statistical graphics.
-\newblock {\em Computational Statistics \& Data Analysis}, 53:3259--3270, 2009.
+A.~Zeileis, K.~Hornik, and P.~Murrell, ``Escaping {RGB}land: selecting colors
+  for statistical graphics,'' {\em Computational Statistics \& Data Analysis},
+  vol.~53, pp.~3259--3270, 2009.
 
 \bibitem{Byrd:1995aa}
-R.~H Byrd, P.~Lu, J.~Nocedal, and C.~Zhu.
-\newblock A limited memory algorithm for bound constrained optimization.
-\newblock {\em {SIAM} Journal on Scientific Computing}, 16:1190, 1995.
+R.~H. Byrd, P.~Lu, J.~Nocedal, and C.~Zhu, ``A limited memory algorithm for
+  bound constrained optimization,'' {\em {SIAM} Journal on Scientific
+  Computing}, vol.~16, p.~1190, 1995.
 
 \bibitem{crockford2006application}
-D.~Crockford.
-\newblock {The application/json media type for javascript object notation
-  (json)}.
-\newblock Technical report, RFC 4627, July, 2006.
+D.~Crockford, ``{The application/json media type for javascript object notation
+  (json)},'' tech. rep., RFC 4627, July, 2006.
+
+\bibitem{Nelder:1965aa}
+J.~A. Nelder and R.~Mead, ``A simplex method for function minimization,'' {\em
+  The Computer Journal}, vol.~7, no.~4, pp.~308 --313, 1965.
+
+\bibitem{Fletcher:1964aa}
+R.~Fletcher and C.~M. Reeves, ``Function minimization by conjugate gradients,''
+  {\em The Computer Journal}, vol.~7, no.~2, pp.~149 --154, 1964.
+
+\bibitem{Belisle:1992aa}
+C.~J.~P. B{\'e}lisle, ``Convergence theorems for a class of simulated annealing
+  algorithms on rd,'' {\em Journal of Applied Probability}, vol.~29, no.~4,
+  pp.~885--895, 1992.
 
 \end{thebibliography}

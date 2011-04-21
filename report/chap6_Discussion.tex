@@ -1,75 +1,27 @@
 \chapter{Discussion}\label{chap:Discussion}
 
-In this report, we introduced a new way of coloring and visualizing multiple sequence alignments based on symbol-symbol similarity scores. Our main objective has been to create an intuitive way of showing the quality and internal structure of an alignment, using colors, which is the most natural and sensible way for human eyes. The basic idea is, the greater the dissimilarity between sequences, the more obvious difference in colors.
+In this report, we introduced a new way of coloring and visualizing multiple sequence alignments based on symbol-symbol confidence (or similarity) scores. Our main objective has been to create an intuitive way of showing the quality and internal structure of an alignment, using colors, which is the most natural and sensible way for human eyes. The basic idea is, the greater the dissimilarity between sequences, the more obvious difference in colors.
 
-Most previous techniques were based on fixed color schemes, meaning each sequence symbol, like an amino acid or a nucleotide, is assigned to a pre-selected color. This is of course a simple and straightforward solution, and is easy for observers to find a particular symbol or pattern. However, this fixed-scheme approach does not emphasize the relationship between adjacent columns and the internal regions and structures in the level of the whole alignment. This is the main reason why we don’t use any predetermined color scheme, but calculate colors only based on the distance matrices, and rotate and flip colors to make them as smooth as possible. This strategy brings significant improvement to the alignment coloring, by showing the conserved regions and blocks in same or similar colors, while those irrelevant ones in quite different colors.
+\section{Color Spaces}
 
-Since we are to convert the scaled coordinates to colors, choosing a suitable color space is an fundamental task. At first we scaled the distance matrix down to a three-dimensional space and mapped it directly to the RGB color space. However, we soon found a problem, that some colors, like very dark ones and very light ones, did not perfectly serve the purpose of representing distances, yet made the graph more noisy. We realized that we don’t really need the whole color space and all possible colors. Instead, those colors with proper range of lightness and different hues will be enough to do the job. So we chose to scale down to a two-dimensional space and map it to CIE Lab space with a fixed lightness value (75). The reason why we didn’t choose one-dimensional scaling is that, a linear space either could not map to enough number of colors (for example, use only one primary color, like red), or could not preserve the distance information (for example, use only hues). So two dimensions is a good balance.
+Most previous techniques were based on fixed color schemes, meaning each sequence symbol, like an amino acid or a nucleotide, is assigned to a pre-selected color. This is of course a simple and straightforward solution, and is easy for observers to find a particular symbol or pattern. However, this fixed-scheme approach does not emphasize the relationship between adjacent columns and the internal regions and structures in the level of the whole alignment. This is the main reason why we don't use any predetermined color scheme, but calculate colors only based on the distance matrices, and rotate and flip colors to make them as smooth as possible. This strategy brings significant improvement to the alignment coloring, by showing the better-aligned regions and blocks in same or similar colors, while those irrelevant ones in quite different colors.
 
-In R, there are several general purpose optimization packages which offer facilities for solving our color rotation and flipping problems. Two popular functions are optim() and nlminb() from package stats. Function optim() provides implementations of five algorithms: Broyden-Fletcher-Goldfarb-Shanno (BFGS), bounded BFGS (L-BFGS-B), conjugate gradient (CG), Nelder and Mead (Nelder-Mead), and simulated annealing (SANN). Nelder-Mead (Nelder and Mead 1965), which is the default one, returns robust results but is relatively slow. CG (Fletcher and Reeves 1964) in faster in larger optimization problems, but more fragile. BFGS is a balance, and L-BFGS-B further provides the ability of box constraints, that each variable can be given a lower/upper bound. SANN (Belisle 1992) is more powerful on rough surfaces but relatively slow. Another function nlminb() offers similar box constraint optimization and similar performance to L-BFGS-B, so these two algorithms are chosen to a further test.
+Since we are to convert the scaled coordinates to colors, choosing a suitable color space is an fundamental task. At first we scaled the distance matrix down to a three-dimensional space and mapped it directly to the RGB color space. However, we soon found a problem, that some colors, like very dark ones and very light ones, did not perfectly serve the purpose of representing distances, yet made the graph more noisy. We realized that we don't really need the whole color space and all possible colors. Instead, those colors with proper range of lightness and different hues will be enough to do the job. So we chose to scale down to a two-dimensional space and map it to CIE Lab space with a fixed lightness value (75). The reason why we didn’t choose one-dimensional scaling is that, a linear space either could not map to enough number of colors (for example, use only one primary color, like red), or could not preserve the distance information (for example, use only hues). So two dimensions is a good balance.
 
-Optimization algorithms always suffer from the local versus global minimum problem, and the final result are more or less unstable and depending on the initial values. To decide which one of L-BFGS-B and nlminb() is more stable in our approach, we run a test on both of them. The test dataset is the alignment of 44 Vpu protein sequences from Guidance. We randomly created 100 sets of initial values, performed optimizations, and see how the return value of the penalty function described in section 3.3 changed.
-Algorithm	Minimum penalty	Aerage penalty	Maximum penalty	Standard deviation
-Initial	
-370,584
-425,728
-444,771
-13,998
-L-BFGS-B	
-136,909
-178,850
-247,218
-17,871
-L-BFGS-B - run 3 times	
-136,909
-178,850
-247,218
-17,871
-mlninb()	
-146,759
-181,688
-426,535
-34,579
-mlninb() - run 3 times	
-142,888
-171,380
-325,469
-21,402
+\section{Optimization Algorithms}
 
+In R, there are several general purpose optimization packages which offer facilities for solving our color rotation and flipping problems. Two popular functions are optim() and nlminb() from package stats. Function optim() provides implementations of five algorithms: \emph{Broyden-Fletcher-Goldfarb-Shanno (BFGS)}, \emph{bounded BFGS (L-BFGS-B)}, \emph{conjugate gradient (CG)}, \emph{Nelder and Mead (Nelder-Mead)}, and \emph{simulated annealing (SANN)}. \emph{Nelder-Mead} \cite{Nelder:1965aa}, which is the default one, returns robust results but is relatively slow. \emph{CG} \cite{Fletcher:1964aa} in faster in larger optimization problems, but more fragile. \emph{BFGS} is a balance, and \emph{L-BFGS-B} further provides the ability of box constraints, that each variable can be given a lower/upper bound. \emph{SANN} \cite{Belisle:1992aa} is more powerful on rough surfaces but relatively slow. Another function \emph{nlminb()} offers similar box constraint optimization and similar performance to \emph{L-BFGS-B}, so these two algorithms are chosen to a further test.
 
-Obviously using L-BFGS-B is more stable than nlminb() on our test dataset.
+Optimization algorithms always suffer from the local versus global minimum problem, and the final result are more or less unstable and depending on the initial values. To decide which one of \emph{L-BFGS-B} and \emph{nlminb()} is more stable in our approach, we run a test on both of them. The test dataset is the alignment of 44 Vpu protein sequences from GUIDANCE server. \cite{Penn:2010ab} We randomly created 100 sets of initial values, performed optimizations, and see how the return value of the penalty function (described in section \ref{sec:rotation}) changed. Table \ref{tab:optim-comp} shows the results of the comparison. Obviously \emph{L-BFGS-B} is more stable in our algorithm.
 
-
-%\section{Summary of Contributions}
-%
-%\subsection{Image Segmentation}
-%
-%\subsection{Cardiac Morphology and Function}
-%
-%\subsection{Coronary Artery Shape-Motion Analysis}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\section{Progression and Scope for Future Work}
-%
-%
-%\subsection{Algorithm for the Automatic LV Blood Pool Segmentation
-%from Short-Axis Dual-Contrast MR Data}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\subsection{Algorithm for the Automatic Delineation of Myocardial
-%Contours in Short-Axis Cardiac Cine-bFFE MR Sequences}
-%
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\subsection{Algorithm for the Automatic Computation of EF from the Short-Axis Cardiac Cine-bFFE MR Sequences}
-%
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\subsection{Computational Framework for the 4D
-%Shape-Motion Analysis of the LAD}
-%
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\subsection{Future Work}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[tp]
+\caption{Comparison of \emph{L-BFGS-B} and \emph{nlminb()}}\label{tab:optim-comp}\centering\small
+\begin{tabular}{lcccc} \toprule
+  Algorithm             & Min. Penalty  & Avg. Penalty  & Max. Penalty  & Std. Deviation  \\ \hline
+  Initial               & 370,584       & 425,728       & 444,771       & 13,998          \\
+  L-BFGS-B              & 136,909       & 178,850       & 247,218       & 17,871          \\
+  L-BFGS-B (3 times)  & 136,909       & 178,850       & 247,218       & 17,871          \\
+  mlninb()              & 146,759       & 181,688       & 426,535       & 34,579          \\
+  mlninb() (3 times)  & 142,888       & 171,380       & 325,469       & 21,402          \\ \bottomrule
+\end{tabular}
+\end{table}

@@ -44,7 +44,7 @@ Coordinates in $P$ have only two dimensions $x$ and $y$. To map $P$ to the three
 
 At the end of this step, $n$ CIE Lab colors $(L, a, b)$ are created.
 
-\section{Hue Rotation and Optimization}
+\section{Hue Rotation and Optimization}\label{sec:rotation}
 
 One of the limitations in many previous MSA visualization techniques is, they introduced unnecessary confusion by using a fixed color scheme. Even for exactly same aligned columns, colors may be totally different, which won't represent any biological dissimilarities. To minimize this effect, we convert the colors from CIE Lab space to \emph{CIE LCH space}, and perform rotations to eliminate noisy colors to the greatest extent possible. In this way, we smooth the color pattern and emphasize the real similarities and dissimilarities among sequences and blocks.
 

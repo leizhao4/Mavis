@@ -1,47 +1,45 @@
 This is BibTeX, Version 0.99c (Web2C 7.5.7)
 The top-level auxiliary file: thesis.aux
-The style file: unsrt.bst
+The style file: ieeetr.bst
 Database file #1: references.bib
-Warning--empty year in Gentleman:aa
-You've used 20 entries,
-            1791 wiz_defined-function locations,
-            590 strings with 6973 characters,
-and the built_in function-call counts, 4621 in all, are:
-= -- 429
-> -- 182
-< -- 2
-+ -- 70
-- -- 50
-* -- 325
-:= -- 730
-add.period$ -- 62
-call.type$ -- 20
-change.case$ -- 16
+You've used 23 entries,
+            1876 wiz_defined-function locations,
+            643 strings with 7227 characters,
+and the built_in function-call counts, 6634 in all, are:
+= -- 713
+> -- 202
+< -- 0
++ -- 78
+- -- 55
+* -- 442
+:= -- 902
+add.period$ -- 29
+call.type$ -- 23
+change.case$ -- 19
 chr.to.int$ -- 0
-cite$ -- 21
-duplicate$ -- 200
-empty$ -- 455
-format.name$ -- 50
-if$ -- 1022
+cite$ -- 23
+duplicate$ -- 347
+empty$ -- 617
+format.name$ -- 55
+if$ -- 1648
 int.to.chr$ -- 0
-int.to.str$ -- 20
-missing$ -- 20
-newline$ -- 104
-num.names$ -- 20
-pop$ -- 49
+int.to.str$ -- 23
+missing$ -- 23
+newline$ -- 78
+num.names$ -- 23
+pop$ -- 52
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 82
+skip$ -- 262
 stack$ -- 0
-substring$ -- 357
-swap$ -- 41
-text.length$ -- 2
+substring$ -- 517
+swap$ -- 168
+text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 1
-while$ -- 47
-width$ -- 22
-write$ -- 221
-(There was 1 warning)
+warning$ -- 0
+while$ -- 68
+width$ -- 25
+write$ -- 241

@@ -16,9 +16,11 @@
 \contentsline {chapter}{\numberline {4}Implementation}{15}
 \contentsline {section}{\numberline {4.1}R Script}{16}
 \contentsline {section}{\numberline {4.2}API}{17}
-\contentsline {section}{\numberline {4.3}User Interface}{17}
+\contentsline {section}{\numberline {4.3}User Interface}{18}
 \contentsline {chapter}{\numberline {5}Results}{19}
 \contentsline {section}{\numberline {5.1}Validity Test}{19}
-\contentsline {section}{\numberline {5.2}Performance Test}{20}
-\contentsline {chapter}{\numberline {6}Discussion}{21}
-\contentsline {chapter}{References}{24}
+\contentsline {section}{\numberline {5.2}Performance Test}{19}
+\contentsline {chapter}{\numberline {6}Discussion}{20}
+\contentsline {section}{\numberline {6.1}Color Spaces}{20}
+\contentsline {section}{\numberline {6.2}Optimization Algorithms}{21}
+\contentsline {chapter}{References}{23}
