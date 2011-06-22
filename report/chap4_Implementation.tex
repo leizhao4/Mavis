@@ -11,8 +11,9 @@ The script \emph{coloring.r} begins with reading three arguments from command-li
   Rscript coloring.r data/score.tsv data/colors.tsv data/seqinfo.tsv
 \end{verbatim}
 
-The file \emph{score.tsv} contains four columns separated by tabs: column number, row number one, row number two, and similarity score between these two rows in this column. The row and column numbers start from 1, and the similarity score values range from 0 to 1. Here are a few example lines in a \emph{score.tsv} file.
-\def\baselinestretch{1}
+The file \emph{score.tsv} contains four columns separated by tabs: column number, first row number, second row number, and similarity score between these two rows in this column. The row and column numbers start from 1, and the similarity score values range from 0 to 1. Figure \ref{fig:score.tsv} shows a few example lines in a \emph{score.tsv} file.
+\begin{figure}[hb]
+\begin{quote}
 \begin{verbatim}
   #COL_NUMBER   #ROW_NUMBER_1   #ROW_NUMBER_2   #RES_PAIR_HIT/NALT
   1             1               2               1.000000
@@ -25,11 +26,15 @@ The file \emph{score.tsv} contains four columns separated by tabs: column number
   2             1               10              1.000000
   2             6               10              1.000000
 \end{verbatim}
+\end{quote}
+\caption[Example of Similarity Score File]{An example of similarity score file \emph{score.tsv}, showing the format of the file. The four columns are: column number, the first row number, the second row number, score value.}\label{fig:score.tsv}
+\end{figure}
 
 The script \emph{coloring.r} consists of four parts. The first part reads the input file, performs multidimensional scaling and create color for each symbol in the CIE LCH space. The second part rotates and flips color hues and optimize the penalty function. The third part sorts the sequences by their average hues and calculates each sequence’s average RGB color. The last part outputs the symbol colors and sequence information into corresponding files.
 
-The color file \emph{colors.tsv} has five columns separated by tabs: column number, row number, and the symbol color in RGB triplet (red, green, blue) in the range from 0 to 1, which will be converted into hexadecimal format used in the user interface module. The sequence information file seqinfo.tsv also has five columns: row number, average hue from 0 to 360 degrees, average color in RGB triplet. A typical \emph{color.tsv} file looks like:
-\def\baselinestretch{1}
+The color file \emph{colors.tsv} has five columns separated by tabs: column number, row number, and the symbol color in RGB triplet (red, green, blue) in the range from 0 to 1, which will be converted into hexadecimal format used in the user interface module. The sequence information file seqinfo.tsv also has five columns: row number, average hue from 0 to 360 degrees, and average color in RGB triplet. Figure \ref{fig:color.tsv} shows how a typical \emph{color.tsv} file looks like.
+\begin{figure}[hb]
+\begin{quote}
 \begin{verbatim}
 1       1       0.1065524      0.5616907       0.3943046
 1       2       0.106256       0.5616652       0.3936842
@@ -43,6 +48,9 @@ The color file \emph{colors.tsv} has five columns separated by tabs: column numb
 3       6       0.1113592      0.570106        0.3250781
 3       10      0.07634505     0.5664451       0.2581746
 \end{verbatim}
+\end{quote}
+\caption[Example of Coloring Result File]{An example of coloring result file \emph{color.tsv}, showing the format of the file. The five columns are (from left to right): row number, average hue, red, green and blue.}\label{fig:color.tsv}
+\end{figure}
 
 \section{API}
 
@@ -50,8 +58,9 @@ A Perl CGI script \emph{api.pl} and a Perl package \emph{Mavis::API} act as the 
 
 The API returns the query result to the web page in JSON (JavaScript Object Notation) format, which is a lightweight text-based data-interchange standard. JSON is derived from a subset of JavaScript syntax and can be easily parsed in JavaScript as well as many other languages, like Perl. We included the Perl JSON 2.51 module to provide JSON encoding/decoding ability to our API. \cite{crockford2006application}
 
-This is an example of the API response in JSON format:
-\def\baselinestretch{1}
+Figure \ref{fig:api-res} is an example of the API response in JSON format:
+\begin{figure}[hb]
+\begin{quote}
 \begin{verbatim}
   { "status"    : 1,
     "id"        : "demo",
@@ -61,7 +70,12 @@ This is an example of the API response in JSON format:
                     {"name":"Seq01", "color":"#26e", "seq":"DEMO"}]
   }
 \end{verbatim}
+\end{quote}
+\caption[Example of API Response in JSON Format]{An example of Mavis API response in JSON format.}\label{fig:api-res}
+\end{figure}
 
-\section{User Interface}
+\section{User Interfaces}
 
 We implement an web interface with HTML and JavaScript to send API requests and draw visualization graphs. The JavaScript code dynamically communicates with API, creates an HTML table, and fills in colors and symbols. This part is simplified by jQuery, which is a popular cross-platform JavaScript library that abstracts complicated DOM selection, CSS manipulation and Ajax effects.
+
+\section{Design Principles}

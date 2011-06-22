@@ -1,13 +1,13 @@
 \begin{thebibliography}{10}
 
-\bibitem{Edgar:2006aa}
-R.~C. Edgar and S.~Batzoglou, ``Multiple sequence alignment,'' {\em Current
-  Opinion in Structural Biology}, vol.~16, no.~3, pp.~368--373, 2006.
-
 \bibitem{Procter2010aa}
 J.~Procter, J.~Thompson, I.~Letunic, C.~Creevey, F.~Jossinet, and G.~Barton,
   ``Visualization of multiple alignments, phylogenies and gene family
   evolution,'' {\em Nature Methods}, vol.~7, no.~3 Suppl, pp.~S16--25, 2010.
+
+\bibitem{Edgar:2006aa}
+R.~C. Edgar and S.~Batzoglou, ``Multiple sequence alignment,'' {\em Current
+  Opinion in Structural Biology}, vol.~16, no.~3, pp.~368--373, 2006.
 
 \bibitem{LIN2002361}
 K.~Lin, A.~C.~W. May, and W.~R. Taylor, ``Amino acid encoding schemes from

@@ -14,14 +14,14 @@ In R, there are several general purpose optimization packages which offer facili
 
 Optimization algorithms always suffer from the local versus global minimum problem, and the final result are more or less unstable and depending on the initial values. To decide which one of \emph{L-BFGS-B} and \emph{nlminb()} is more stable in our approach, we run a test on both of them. The test dataset is the alignment of 44 Vpu protein sequences from GUIDANCE server. \cite{Penn:2010ab} We randomly created 100 sets of initial values, performed optimizations, and see how the return value of the penalty function (described in section \ref{sec:rotation}) changed. Table \ref{tab:optim-comp} shows the results of the comparison. Obviously \emph{L-BFGS-B} is more stable in our algorithm.
 
-\begin{table}[tp]
+\begin{table}[hb]
 \caption{Comparison of \emph{L-BFGS-B} and \emph{nlminb()}}\label{tab:optim-comp}\centering\small
 \begin{tabular}{lcccc} \toprule
-  Algorithm             & Min. Penalty  & Avg. Penalty  & Max. Penalty  & Std. Deviation  \\ \hline
-  Initial               & 370,584       & 425,728       & 444,771       & 13,998          \\
-  L-BFGS-B              & 136,909       & 178,850       & 247,218       & 17,871          \\
+  Algorithm           & Min. Penalty  & Avg. Penalty  & Max. Penalty  & Std. Deviation  \\ \hline
+  Initial             & 370,584       & 425,728       & 444,771       & 13,998          \\
+  L-BFGS-B            & 136,909       & 178,850       & 247,218       & 17,871          \\
   L-BFGS-B (3 times)  & 136,909       & 178,850       & 247,218       & 17,871          \\
-  mlninb()              & 146,759       & 181,688       & 426,535       & 34,579          \\
+  mlninb()            & 146,759       & 181,688       & 426,535       & 34,579          \\
   mlninb() (3 times)  & 142,888       & 171,380       & 325,469       & 21,402          \\ \bottomrule
 \end{tabular}
 \end{table}
