@@ -2,29 +2,69 @@
 
 \section{Background}
 
-In the field of molecular biology and bioinformatics, sequence data, such as nucleic acid sequences (DNA and RNA) and protein sequences are widely used as research materials. To understand the sequence data in functional, structural or evolutionary aspects, multiple sequence alignment (MSA) analysis is required for almost all comparative sequence studies.
+Biological sequences, including nucleotide sequences (DNA and RNA) and peptide sequences (proteins), are the primary structure of biological molecules, and play an fundamental role in life and reproduction. Since 1970s, sequences of hundreds of thousands of organisms have been decoded and analyzed by researchers. \cite{Benson:2007lr} With the explosively growing amount of data, it's impractical to study sequences manually. Computer-aided techniques are needed to help analyze there structures, functions and evolution.
+
+Multiple sequence alignment (MSA) is one of the computational way of identify regions of similarity between the sequences, and is required by almost all comparative sequence studies. An MSA is typically formed as a matrix, in which each row represents a sequence, and each column corresponds to an equivalent position across all the sequences aligned. Each element of the matrix contains a symbol, which can be either `-' (a gap) or a sequence symbol (an amino acid for DNA/RNA sequences, or a nucleotide base for protein sequences). \cite{Edgar:2006aa}
 
 \begin{figure}[hb]
-\begin{quote}\Tiny
+\scriptsize
 \begin{verbatim}
-
+  AY169803.O  MHYRDLSTLIIVSALLLINVXLWMFILRXYLEHKRQERREREILERLRRIREIKDDSDYESNGEEEQEVMD-LVHSHGFDNPMFEL
+  AY169809.O  MQYKGL--LLIIIALLLINVXVWMFNLRKYLEQKKQERREREVINRLRRIREVKDDSDYESNGEEEQEVME-LVHSHGFDNPMFEL
+  AY169807.O  MLHRDLLLLIIISALLLTNIILWMFVLRKYLEIKKQERREREILERLRXIREIRDDSDYESNEEEEQEVRDHLVHTFGFANPMFEI
+  AY169811.O  MHHRDLLTLIAVSALLFINIILWIYVLRKYLEQRKQDRREREILERLRRIXEIGDDSDYESNEEEEQEVMD-LVHNHGFDNPMFEP
+  AJ302646.O  MHHRDLLALITTSALLLTNVVLWTFILRQYLKQKKQDKREREILERLRRIRQIEDDSDYESDGTEEQEVRD-LVHSYGFDNPMFEL
+  AY169815.O  MQHKDLLILIITSALLLINVILWLFVLKQCLEQKKQTKREREIIRRLRRIREIEDDSDYESNGEEEQTVRD-LIHSHGFDNPMFEL
+  AY169804.O  MHQRDLLILIAVSILCLICILVWTFNLRKYLEHRKQDKREREILERLRRVREIRDDSDYESBGEEEQEVMD-LIHSHGFANPLFEL
+  AY169810.O  MNYKELLSLIVVSVLLLAAIVIWMFILKKYLEQKEQDRRERELLKRIERLXEXRDDSDYESNGDEEQEVMH-LVHTHGFANPMFEL
+  AY169806.O  MYKDQIILIIIFCVVFLIAACIWLFILKTYLEQKKQDRREKELLRRLQRIIEIRDDSDYESNGEEEQEVMD-LVHEHGFVNPMFEL
 \end{verbatim}
-\end{quote}
-\caption[Example of Multiple Sequence Alignment]{An example of multiple sequence alignment.}\label{fig:msa}
+\caption[Example of Multiple Sequence Alignment]{An example of multiple sequence alignment, generated with \emph{ClustalW} \cite{Thompsonaa}.}\label{fig:msa}
 \end{figure}
 
-A multiple sequence alignment is usually a matrix, in which each row represents a sequence, and each column corresponds to the equivalent positions across all sequences aligned. Each element of the matrix contains a symbol, which can be either `-' (a gap) or a sequence symbol (an amino acid for DNA/RNA sequences, or a nucleotide base for protein sequences). \cite{Edgar:2006aa}
+An MSA result can be a large and complex matrix. To highlight similarity or other properties, certain visualization methods are used. Some alignment programs, like ClustalW, add an asterisk, colon, semicolon, or other symbols, to show conservative columns. Some others use color to display information: assign each nucleotide or amino acid its own color, and indicate amino acid properties with an empirical color assignment.
 
-Due to the size and complexity of the multiple sequence alignment datasets, computer visualization techniques are essential to assist in understanding, analyzing and evaluating the alignment results. Numerous MSA visualization applications, either stand-alone or web-based, have been developed in recent decades, ranging from simple MSA viewers, to complex editing and analysis platforms. Many of them have graphical user interfaces showing a grid of symbols, usually along with various coloring, sizing and annotation. \cite{Procter2010aa}
+\begin{figure}[hbt]
+\center{\includegraphics[width=0.9\textwidth]{figures/procter2a.pdf}}
+\caption[Protein MSA Colored with Jalview]{A protein MSA colored with Jalview \cite{Procter2010aa,Waterhouse:2009fk}}\label{fig:procter-2a}
+\end{figure}
 
 \section{Related Work}
 
-Coloring an alignment has been widely implemented to highlight specific regions, properties or patterns. \cite{Procter2010aa} The simplest way of coloring is to use a fixed color scheme, in which each sequence symbol has its own color, and will not be changed across the alignment. The assignment of color schemes are usually based on some empirical properties or chemical classifications. There are numerous color schemes available for different purposes, but Taylor \cite{LIN2002361} and Clustal \cite{Thompsonaa} are widely used and often considered de facto standards.
+Numerous MSA visualization applications, either stand-alone or web-based, have been developed in recent decades, ranging from simple MSA viewers, to complex editing and analysis platforms. Many of them have graphical user interfaces showing a grid of symbols, usually along with various coloring, sizing and annotation. \cite{Procter2010aa}
 
-However, using pre-determined color schemes to color sequence symbols, either amino acids or nucleotide bases, are not always helpful to phylogenetic analysis. Those fixed schemes focus on chemical differences between specific types of symbols, rather than between sequences, regions, blocks or structures of the alignment. For example, if symbols are examined within a certain column, the colors reflect the similarities fairly well. However, if the alignment is analyzed horizontally, comparative information within a row or a rectangular region are unable to be displayed, like how one sequence is similar with others, which section aligns better than another, which subset of sequences in which range of columns are more conserved, or how robust the alignment accuracy is.
+\begin{figure}[hbt]
+\centering
+\subfloat[Some nucleotide color schemes.]{\includegraphics[width=0.5\textwidth]{figures/procter2c.pdf}}
+\subfloat[Some amino acid color schemes.]{\includegraphics[width=0.4\textwidth]{figures/procter2b.pdf}}
+\caption[Some Nucleotide and Amino Acid Color Schemes]{Examples of color schemes used by some visualization tools. \cite{Procter2010aa}}\label{fig:procter-2bc}
+\end{figure}
 
-Here we suggest a new MSA visualization tool called Mavis (Multiple Alignment VISualization), which focuses on highlighting evolutionary relationships and internal structures of an alignment. Instead of relying on chemical properties or any other information from symbol types, our approach takes only symbol-symbol correlation into consideration. The most valuable result we would like to provide is a whole picture of the MSA.
+Coloring an alignment has been widely implemented to highlight specific regions, properties or patterns. The simplest way of coloring is to use a fixed color scheme, in which each sequence symbol has its own color, and will not be changed across the alignment. The assignment of color schemes are usually based on some empirical properties or chemical classifications.
+
+There are numerous color schemes available for different purposes, but Taylor \cite{LIN2002361} and Clustal \cite{Thompsonaa} are widely used and often considered \emph{de facto} standards.
+
+\begin{figure}[hbt]
+\center{\includegraphics[width=0.7\textwidth]{figures/procter2d.pdf}}
+\caption[Taylor's Amino Acid Color Scheme]{Taylor's \cite{LIN2002361} Venn diagram showing the color scheme based on the physicochemical properties of the amino acid groups. \cite{Procter2010aa}}\label{fig:procter-2d}
+\end{figure}
+
+Using these pre-determined color schemes to color sequence symbols, however, is not always helpful to phylogenetic analysis. Those fixed color schemes reflect chemical differences between specific types of symbols, rather than between sequences, regions, blocks or structures of the alignment.
+
+When symbols are examined within one column, the colors successfully show the similarities. But in the horizontal aspect, comparative information within a row or a rectangular region are unable to be displayed, like how one sequence is similar with others, which section aligns better than another, which subset of sequences in which range of columns are more conserved, or how robust the alignment accuracy is.
+
+\begin{figure}[hbt]
+\centering
+\subfloat[A perfectly aligned MSA. However, the color graph is distractive and fails to convey a `perfect' feeling.]{\includegraphics[width=0.35\textwidth]{figures/intro1.pdf}}
+\hspace{5mm}
+\subfloat[This is an extremely poorly aligned one, but the color graph looks even better than (a).]{\includegraphics[width=0.35\textwidth]{figures/intro2.pdf}}
+\caption[Fixed Color Scheme Involves Confusion]{Fixed color scheme involves confusion.}\label{fig:intro1}
+\end{figure}
 
 \section{Thesis Outline}
 
-This thesis is organized in the following way: Chapter 2 briefly summarizes how Mavis processes data input, creates colors and displays the colored MSA graph. Chapter 3 explains the algorithm step by step, from scaling to mapping and optimization. Chapter 4 describes our implementation of the algorithm, including the back-end, API and front-end. Chapter 5 presents test results to show the validity and performance of our implementation. The whole work is discussed and concluded in Chapter 6.
+In this report, we introduce a new MSA visualization tool called \emph{Mavis} (Multiple Alignment VISualization). Mavis focuses on highlighting evolutionary relationships and internal structures of an alignment. Instead of relying on chemical properties or any other information from specific symbol types, our approach is based on only one metric, which is the symbol-symbol similarity score. The color of a sequence residue will not depend on its symbol type, but on its similarity scores with other residues. By using this new approach, we try to provide a whole picture of an MSA, in which the structure and quality are clearly displayed.
+
+The rest part of this thesis is organized into five chapters. Chapter 2 briefly explains the general idea of how Mavis is designed and the steps it takes to color an MSA. Chapter 3 expounds the core algorithm step by step, from multidimensional scaling, to color mapping, and to optimization. Chapter 4 describes the implementation of the algorithm, including the back-end, API and different user interfaces. Chapter 5 presents some test results to show the validity and performance of our implementation. The whole work is discussed and concluded in Chapter 6.
+
+The source code of Mavis back-end, API and web interface is available in the Appendix at the end of this report.

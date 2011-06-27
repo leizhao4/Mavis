@@ -1,10 +1,18 @@
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Example of Multiple Sequence Alignment}}{4}
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Example of Multiple Sequence Alignment}}{2}
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Protein MSA Colored with Jalview}}{2}
+\contentsline {figure}{\numberline {1.3}{\ignorespaces Some Nucleotide and Amino Acid Color Schemes}}{3}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Some nucleotide color schemes.}}}{3}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Some amino acid color schemes.}}}{3}
+\contentsline {figure}{\numberline {1.4}{\ignorespaces Taylor's Amino Acid Color Scheme}}{4}
+\contentsline {figure}{\numberline {1.5}{\ignorespaces Fixed Color Scheme Involves Confusion}}{5}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {A perfectly aligned MSA. However, the color graph is distractive and fails to convey a `perfect' feeling.}}}{5}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {This is an extremely poorly aligned one, but the color graph looks even better than (a).}}}{5}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Example of Similarity Score File}}{18}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Example of Coloring Result File}}{19}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Example of API Response in JSON Format}}{20}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Example of Similarity Score File}}{20}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Example of Coloring Result File}}{21}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Example of API Response in JSON Format}}{22}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -5,20 +5,30 @@ J.~Procter, J.~Thompson, I.~Letunic, C.~Creevey, F.~Jossinet, and G.~Barton,
   ``Visualization of multiple alignments, phylogenies and gene family
   evolution,'' {\em Nature Methods}, vol.~7, no.~3 Suppl, pp.~S16--25, 2010.
 
+\bibitem{Benson:2007lr}
+D.~A. Benson, I.~{Karsch-Mizrachi}, D.~J. Lipman, J.~Ostell, and D.~L. Wheeler,
+  ``{GenBank},'' {\em Nucleic Acids Research}, vol.~36, pp.~D25--D30, Dec.
+  2007.
+
 \bibitem{Edgar:2006aa}
 R.~C. Edgar and S.~Batzoglou, ``Multiple sequence alignment,'' {\em Current
   Opinion in Structural Biology}, vol.~16, no.~3, pp.~368--373, 2006.
+
+\bibitem{Thompsonaa}
+J.~D. Thompson, T.~J. Gibson, and D.~G. Higgins, ``Multiple sequence alignment
+  using {ClustalW} and {ClustalX.},'' {\em Current Protocols in
+  Bioinformatics}, p.~2.3, 2002.
+
+\bibitem{Waterhouse:2009fk}
+A.~M. Waterhouse, J.~B. Procter, D.~M.~A. Martin, M.~Clamp, and G.~J. Barton,
+  ``Jalview version 2---a multiple sequence alignment editor and analysis
+  workbench,'' {\em Bioinformatics}, vol.~25, pp.~1189 --1191, May 2009.
 
 \bibitem{LIN2002361}
 K.~Lin, A.~C.~W. May, and W.~R. Taylor, ``Amino acid encoding schemes from
   protein structure alignments: multi-dimensional vectors to describe residue
   types,'' {\em Journal of Theoretical Biology}, vol.~216, no.~3, pp.~361 --
   365, 2002.
-
-\bibitem{Thompsonaa}
-J.~D. Thompson, T.~J. Gibson, and D.~G. Higgins, ``Multiple sequence alignment
-  using {ClustalW} and {ClustalX.},'' {\em Current Protocols in
-  Bioinformatics}, p.~2.3, 2002.
 
 \bibitem{Penn:2010aa}
 O.~Penn, E.~Privman, G.~Landan, D.~Graur, and T.~Pupko, ``An alignment
