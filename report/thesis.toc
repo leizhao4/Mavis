@@ -3,29 +3,31 @@
 \contentsline {section}{\numberline {1.2}Related Work}{3}
 \contentsline {section}{\numberline {1.3}Thesis Outline}{5}
 \contentsline {chapter}{\numberline {2}Approach}{7}
-\contentsline {section}{\numberline {2.1}Data Input}{7}
-\contentsline {section}{\numberline {2.2}Color Generating}{8}
-\contentsline {section}{\numberline {2.3}Color Optimization}{9}
-\contentsline {section}{\numberline {2.4}MSA Visualization}{9}
-\contentsline {chapter}{\numberline {3}Algorithms}{10}
-\contentsline {section}{\numberline {3.1}Multidimensional Scaling}{10}
-\contentsline {section}{\numberline {3.2}Color Space Mapping}{12}
-\contentsline {section}{\numberline {3.3}Hue Rotation and Optimization}{13}
-\contentsline {section}{\numberline {3.4}Hue Flipping}{15}
-\contentsline {section}{\numberline {3.5}Sequence Sorting}{17}
-\contentsline {section}{\numberline {3.6}Time Complexity}{18}
-\contentsline {chapter}{\numberline {4}Implementation}{19}
-\contentsline {section}{\numberline {4.1}R Script}{20}
-\contentsline {section}{\numberline {4.2}API}{22}
-\contentsline {section}{\numberline {4.3}User Interfaces}{23}
-\contentsline {section}{\numberline {4.4}Design Principles}{23}
-\contentsline {chapter}{\numberline {5}Results}{24}
-\contentsline {section}{\numberline {5.1}Mavis for Web}{24}
-\contentsline {section}{\numberline {5.2}Mavis for iPhone}{24}
-\contentsline {section}{\numberline {5.3}Mavis for iPad}{24}
-\contentsline {section}{\numberline {5.4}Validity}{24}
-\contentsline {section}{\numberline {5.5}Benchmarks}{24}
-\contentsline {chapter}{\numberline {6}Discussion}{26}
-\contentsline {section}{\numberline {6.1}Color Spaces}{26}
-\contentsline {section}{\numberline {6.2}Optimization Algorithms}{28}
-\contentsline {chapter}{References}{30}
+\contentsline {section}{\numberline {2.1}Main Objective}{7}
+\contentsline {section}{\numberline {2.2}Data Input}{8}
+\contentsline {section}{\numberline {2.3}Color Generating}{9}
+\contentsline {section}{\numberline {2.4}Color Optimization}{11}
+\contentsline {section}{\numberline {2.5}MSA Visualization}{13}
+\contentsline {chapter}{\numberline {3}Algorithms}{14}
+\contentsline {section}{\numberline {3.1}Multidimensional Scaling}{14}
+\contentsline {section}{\numberline {3.2}Color Space Mapping}{16}
+\contentsline {section}{\numberline {3.3}Hue Rotation and Optimization}{17}
+\contentsline {section}{\numberline {3.4}Hue Flipping}{19}
+\contentsline {section}{\numberline {3.5}Sequence Sorting}{21}
+\contentsline {section}{\numberline {3.6}Flowchart}{21}
+\contentsline {section}{\numberline {3.7}Time Complexity}{21}
+\contentsline {chapter}{\numberline {4}Implementation}{22}
+\contentsline {section}{\numberline {4.1}R Script}{23}
+\contentsline {section}{\numberline {4.2}API}{25}
+\contentsline {section}{\numberline {4.3}User Interfaces}{26}
+\contentsline {section}{\numberline {4.4}Design Principles}{26}
+\contentsline {chapter}{\numberline {5}Results}{27}
+\contentsline {section}{\numberline {5.1}Mavis for Web}{27}
+\contentsline {section}{\numberline {5.2}Mavis for iPhone}{27}
+\contentsline {section}{\numberline {5.3}Mavis for iPad}{27}
+\contentsline {section}{\numberline {5.4}Validity}{27}
+\contentsline {section}{\numberline {5.5}Benchmarks}{27}
+\contentsline {chapter}{\numberline {6}Discussion}{29}
+\contentsline {section}{\numberline {6.1}Color Spaces}{29}
+\contentsline {section}{\numberline {6.2}Optimization Algorithms}{31}
+\contentsline {chapter}{References}{33}

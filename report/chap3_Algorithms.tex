@@ -1,8 +1,8 @@
 \chapter{Algorithms}\label{chap:Algorithms}
 
-The algorithm of color computation consists of five stages. First, multidimensional scaling reduces the number of dimensions and convert the confidence/similarity scores into coordinates. Second, coordinates are mapped onto part of the \emph{CIE Lab color space} \cite {McLAREN:1976aa}, and colors are created. Third, colors are flipped and rotated to smooth the graph and remove color noises. Finally, calculate the average color/hue of each sequence, sort them, and output for further display.
+Mavis algorithm of color computation consists of four stages. First, multidimensional scaling reduces the number of dimensions and convert the confidence/similarity scores into coordinates. Second, coordinates are mapped onto part of the \emph{CIE Lab color space} \cite {McLAREN:1976aa}, and colors are created. Third, colors are flipped and rotated to smooth the graph and remove color noises. Finally, calculate the average color/hue of each sequence, sort them, and output for further display.
 
-\emph{(Flowchart)}
+We will discuss all these stages step by step in this chapter.
 
 \section{Multidimensional Scaling}
 
@@ -36,8 +36,6 @@ k = \left\{ \begin{array}{ll}
 
 Then we perform the multidimensional scaling on the distance matrix $M$. When $n<2$, the generated coordinates are lower than two-dimensional, and the missing coordinate values are filled by zeros.
 
-\emph{(Flowchart)}
-
 \section{Color Space Mapping}
 
 The above procedure returns a set $P$ of $n$ coordinates $(x,y)$ in a two-dimensional space, representing the $n$ symbols in a column of a multiple sequence alignment. This two-dimensional space is further mapped to a three-dimensional color space.
@@ -47,8 +45,6 @@ The CIE Lab color space \cite {McLAREN:1976aa} is a color-opponent space. The na
 Coordinates in $P$ have only two dimensions $x$ and $y$. To map $P$ to the three-dimensional CIE Lab space, $L$ for lightness is set to a fixed value 75, and two other dimensions $a$ and $b$ are assigned as $x$ and $y$ scaled from $[0,1]$ to $[0, 100]$. $$a=x*100$$ $$b=y*100$$
 
 At the end of this step, $n$ CIE Lab colors $(L, a, b)$ are created.
-
-\emph{(Flowchart)}
 
 \section{Hue Rotation and Optimization}\label{sec:rotation}
 
@@ -66,8 +62,6 @@ We look for an optimized set $R$ of $n$ rotation angles $r_i$, such that after r
 
 The optimization procedure is performed by R's general-purpose optimization function \emph{optim()} \cite{R2009aa}. Among five available optimization algorithms provided by this function, we choose the \emph{bounded Broyden-Fletcher-Goldfarb-Shanno} (L-BFGS-B) method \cite{Byrd:1995aa}. This algorithm allows box constraints, meaning each variable can be given a lower and/or upper bound. Plus, it uses a limited amount of memory. The initial values are set to 0 and boundaries to $[0, 2\pi]$. More detailed comparison between different optimization functions and algorithms will be discussed later in Chapter 6.
 
-\emph{(Flowchart)}
-
 \section{Hue Flipping}
 
 One characteristic of the coordinates generated from multidimensional scaling is, they can not only be rotated, but also flipped, without changing the distances between each other. Adding flipping ability to the above rotation optimization procedure may result in lower minimal penalty values and better coloring results. To keep the penalty function simple and fast, we perform a heuristic flipping \emph{before} the rotation step.
@@ -80,14 +74,12 @@ If a column contains more clockwise changes than counterclockwise changes, it's 
 
 If two adjacent columns are in opposite types, flip the latter one to make them in same type. Then the flipped alignment are sent back to the procedure discussed in section 3.3.
 
-\emph{(Flowchart)}
-
 \section{Sequence Sorting}
 
 The alignment graph is supposed to provide information on how sequences will group with each other. We sort sequences after coloring optimization, based on the average hue of each one, which is calculated by the average angle function proposed previously in section 3.3.
 
 The fact that hue values are circular, results in an additional question on where to cut the circle to get a sorted list of sequences. In a sorted circle of $n$ average hue values, $h_1,h_2,\cdots,h_n$, we calculate the absolute difference between each pair of adjacent ones ($h_1$ is adjacent to $h_n$). $$\Delta h_{1,2}=|\mathrm{diff}(h_1,h_2)|$$ $$\Delta h_{2,3}=|\mathrm{diff}(h_2,h_3)|$$ $$\cdots$$ $$\Delta h_{n,1}=|\mathrm{diff}(h_n,h_1)|$$ Then, the circle is split at the biggest gap $$\Delta h_{max}=\Delta h_{i,i+1}=|\mathrm{diff}(h_i,h_{i+1})|$$ to best avoid separating similar sequences.
 
-\emph{(Flowchart)}
+\section{Flowchart}
 
 \section{Time Complexity}
