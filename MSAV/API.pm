@@ -69,7 +69,7 @@ sub load_sequence_order {
   for my $seq_info (<ORDER>) {
     chomp $seq_info;
     my ($row, $seq_hue, $r, $g, $b, $l, $a_val, $b_val) = split /\t/, $seq_info;
-    push @$seq_order, { row => $row, color => &rgb_to_html($r / 255, $g / 255, $b / 255), a => $a_val, b => $b_val };
+    push @$seq_order, { row => $row, color => &rgb_to_html($r, $g, $b), a => $a_val, b => $b_val };
   }
   close ORDER;
   return $seq_order;
