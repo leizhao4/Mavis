@@ -24,7 +24,7 @@ function refreshDisplay() {
   drawAlignmentLayout();
   drawAlignmentTable();
   drawAlignmentColors();
-  drawAlignmentPlot();
+  //drawAlignmentPlot();
 }
 
 function drawAlignmentLayout(title) {
