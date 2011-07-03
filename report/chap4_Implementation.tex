@@ -56,7 +56,7 @@ The color file \emph{colors.tsv} has five columns separated by tabs: column numb
 
 A Perl CGI script \emph{api.pl} and a Perl package \emph{Mavis::API} act as the API between the R back-end and HTML/JavaScript front-end. The Perl CGI \emph{api.pl} takes two parameters from HTTP requests, \emph{action} and \emph{id}. The default action is \emph{alignment}, meaning the alignment information, including sequences, colors, average colors and order of sequences, should be returned. In this action, an additional \emph{id} parameter is expected as the alignment ID. Another available action is \emph{list}, which requests a list of all existing alignment IDs.
 
-The API returns the query result to the web page in JSON (JavaScript Object Notation) format, which is a lightweight text-based data-interchange standard. JSON is derived from a subset of JavaScript syntax and can be easily parsed in JavaScript as well as many other languages, like Perl. We included the Perl JSON 2.51 module to provide JSON encoding/decoding ability to our API. \cite{crockford2006application}
+The API returns the query result to the web page in JSON (JavaScript Object Notation) format, which is a lightweight text-based data-interchange standard. JSON is derived from a subset of JavaScript syntax and can be easily parsed in JavaScript as well as many other languages, like Perl. We included the Perl JSON 2.51 module to provide JSON encoding/decoding ability to our API \cite{crockford2006application}.
 
 Figure \ref{fig:api-res} is an example of the API response in JSON format:
 \begin{figure}[hb]

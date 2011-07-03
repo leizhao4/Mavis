@@ -2,7 +2,7 @@
 
 \section{Main Objective}
 
-In this thesis report, we address a novel method to visualize multiple sequence alignments using colors. The main objective is to highlight sequence similarity (or alignment confidence) with color similarity.
+In this thesis, we address a novel method to visualize multiple sequence alignments using colors. The main objective is to highlight sequence similarity (or alignment confidence) with color similarity.
 
 In the alignment matrix, a well-aligned area should be represented by a solid-color shape, while a poorly-aligned one should become a mosaic of different colors. All the alignment-level information, such as evolutionary relationships, phylogenetic characteristics and alignment accuracy, should be revealed by the color pattern of the graph. Figure \ref{fig:app-wa} compares two types of MSA regions and their coloring results.
 
@@ -22,24 +22,18 @@ Unlike most traditional coloring approaches, we use an set of pairwise scores in
 
 Every pair of residues within a same column has a similarity score. These scores are used to determine how similar the residue colors should appear to each other. In a good-quality MSA region, all residues are confidently aligned together, therefore the colors would be almost the same. While in a bad-quality region, many alignments are doubtable, resulting in many different colors.
 
-One good way to generate this similarity score data set is by using GUIDANCE \cite{Penn:2010aa,Penn:2010ab}, which is a tool for quantifying alignment uncertainty. GUIDANCE produces a confidence score in range of $[0, 1]$, named GUIDANCE score, for each symbol, symbol pair, column and sequence in the alignment. We take the symbol-pair GUIDANCE confidence scores as the data input to Mavis.
+One good way to generate this similarity score data set is by using GUIDANCE \cite{Penn:2010aa,Penn:2010ab}, which is a tool for quantifying alignment uncertainty. GUIDANCE produces a confidence score in range of $[0, 1]$, named GUIDANCE score, for each symbol, symbol pair, column and sequence in the alignment. We take the symbol-pair GUIDANCE confidence scores as the input to Mavis.
 
 \section{Color Generating}
 
-The colors of the symbols are generated in such way that the color similarity represents the residue alignment confidence. We have four steps to accomplish this goal.
+The colors of the symbols are generated in such way that the color similarity represents the residue's alignment confidence. We have four steps to accomplish this goal.
 
 \begin{figure}[hbt]
 \center{\includegraphics[width=\textwidth]{figures/chap2_color.pdf}}
 \caption[Conversion from Distance Matrix into Colors]{A distance matrix is converted into points on a two-dimensional color space. The distances between points are approximately preserved. The color where a point is located is assigned to the corresponding alignment residue.}\label{fig:chap2_color}
 \end{figure}
 
-First, the confidence or similarity score is thought reversely, as a distance or dissimilarity score. The largest confidence score is converted into a smallest distance, and vice versa.
-
-Second, from all these distances, an $N*N$ distance matrix is constructed, where $N$ is the number of residues in the same column.
-
-Third, from the distance matrix, the $N$ residues are mapped as $N$ points in a space of $N-1$ dimensions, such that for each pair of points, their Euclidean distance is equal to the value in the distance matrix.
-
-Finally, we map this space onto a color space, to find a color for each point. In an appropriate color space, the Euclidean distance approximately represents the color difference, so that our alignment confidence is linked with color similarity.
+First, the confidence or similarity score is converted into a distance or dissimilarity score. Second, from all these distances, an $N*N$ distance matrix is constructed for each column, where $N$ is the number of residues in the same column. Third, from the distance matrix, the $N$ residues are mapped as $N$ points in a space of $N-1$ dimensions, such that for each pair of points, their Euclidean distance is equal to the value in the distance matrix. Finally, we map this space onto a color space, to find a color for each point. In an appropriate color space, the Euclidean distance approximately represents the color difference perceived by humans, so that our alignment confidence is linked with color similarity.
 
 One problem is, most color spaces are three-dimensional or under. In order to map the original space to a color space, it is necessary to reduce the dimension from $N-1$ to no more than 3, while the distances are still preserved as much as possible. This dimension reduction process is done by using a statistical technique called \emph{classical multidimensional scaling} \cite{Borg:1997aa}.
 
