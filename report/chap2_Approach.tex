@@ -26,44 +26,42 @@ One good way to generate this similarity score data set is by using GUIDANCE \ci
 
 \section{Color Generating}
 
-The colors of the symbols are generated in such way that the color similarity represents the residue's alignment confidence. We have four steps to accomplish this goal.
+The colors of the symbols are generated in such way that the color similarity represents the residue's alignment confidence. We have three steps to accomplish this goal.
 
 \begin{figure}[hbt]
 \center{\includegraphics[width=\textwidth]{figures/chap2_color.pdf}}
 \caption[Conversion from Distance Matrix into Colors]{A distance matrix is converted into points on a two-dimensional color space. The distances between points are approximately preserved. The color where a point is located is assigned to the corresponding alignment residue.}\label{fig:chap2_color}
 \end{figure}
 
-First, the confidence or similarity score is converted into a distance or dissimilarity score. Second, from all these distances, an $N*N$ distance matrix is constructed for each column, where $N$ is the number of residues in the same column. Third, from the distance matrix, the $N$ residues are mapped as $N$ points in a space of $N-1$ dimensions, such that for each pair of points, their Euclidean distance is equal to the value in the distance matrix. Finally, we map this space onto a color space, to find a color for each point. In an appropriate color space, the Euclidean distance approximately represents the color difference perceived by humans, so that our alignment confidence is linked with color similarity.
+First, the confidence or similarity score is converted into a distance or dissimilarity score. From all these distances, an $N*N$ distance matrix is constructed for each column, where $N$ is the number of residues in the same column. Second, from the distance matrix, the $N$ residues are mapped as $N$ points in a space of $N-1$ dimensions, such that for each pair of points, their Euclidean distance is equal to the value in the distance matrix. This mapping process is done by using a statistical technique called \emph{classical multidimensional scaling} \cite{Borg:1997aa}. Third, we map this space onto a color space, to find a color for each point. In an appropriate color space, the Euclidean distance approximately represents the color difference perceived by humans, so that our alignment confidence is linked with color similarity.
 
-One problem is, most color spaces are three-dimensional or under. In order to map the original space to a color space, it is necessary to reduce the dimension from $N-1$ to no more than 3, while the distances are still preserved as much as possible. This dimension reduction process is done by using a statistical technique called \emph{classical multidimensional scaling} \cite{Borg:1997aa}.
+One problem with the last step is that most color spaces are three-dimensional. In order to map the original space to a color space, it is necessary to reduce the dimension from $N-1$ to no more than 3, while the distances are still preserved as much as possible. Fortunately, classical multidimensional scaling is designed in such a way that the result has the largest possible variance on the first axis, the second largest on the second axis, and so on. Thus, we can reduce the space dimension by picking the first a few axes, and mostly preserve the distances.
 
 \section{Color Optimization}
 
-Up to now, our approach only operates on the column level, and does not consider the relationship between columns. The only way to create a solid-color well-aligned region, is to take cross-column information into account. Since there is no confidence score for two residues from different columns, the color difference between them does not mean anything, and should be eliminated as much as we can. In other words, the color graph needs to be as smooth as possible in the horizontal direction.
+Up to now, our approach only operates on the column level and does not consider the relationship between columns. The only way to create a solid-color well-aligned region is to take cross-column information into account. Since there is no confidence score for two residues from different columns, the color difference between them does not mean anything, and should be eliminated as much as we can. In other words, the color graph needs to be as smooth as possible in the horizontal direction.
 
 \begin{figure}[hbt]
 \center{\includegraphics[width=\textwidth]{figures/chap2_rotate.pdf}}
 \caption[Color Optimization by Rotation]{An example of color optimization by rotating.}\label{fig:chap2_rotate}
 \end{figure}
 
-A useful feature is, all the points in the color space can be arbitrarily rotated and/or flipped, without changing the distance between any pair of symbols within a column. For instance, all reds and all greens are virtually identical in the sense of distances and quality of alignment. Converting them into the same color pattern will better support this idea and remove unnecessary color noises.
+A useful feature is that classical multidimensional scaling is invariant under flips and rotations. All the points in the color space can be arbitrarily rotated and/or flipped, without changing the distance between any pair of symbols within a column. For instance, all reds and all greens are virtually identical in the sense of distances and quality of alignment. Converting them into the same color pattern will better support this idea and remove unnecessary color noises.
 
 \begin{figure}[hbt]
 \center{\includegraphics[width=\textwidth]{figures/chap2_flip.pdf}}
 \caption[Color Optimization by Flipping]{An example of color optimization by flipping.}\label{fig:chap2_flip}
 \end{figure}
 
-To optimize our color assignment, we define a penalty function to quantify the overall noise level of an alignment. This function calculates the color variance within each row and sum them up. By rotating and flipping, the ideal color assignment should result in the lowest penalty value.
+To optimize our color assignment, we define a penalty function to quantify the overall color noise level of an alignment. This function calculates the color variance within each row and sum them up. By rotating and flipping, the ideal color assignment should result in the lowest penalty value.
 
 For larger MSAs, finding the exact optimum may become time-consuming and sometimes impractical. Sub-optimal results are also acceptable for visualization purpose. In Mavis, we use an approximate solution to speed up the optimization procedure.
 
 \section{MSA Visualization}
 
-Mavis creates a colored matrix for an MSA. Users may choose to display residue symbols or not. The user interface is available in a web browser, in order to achieve better flexibility and portability. Other user interfaces are also provided for devices like mobile phones and tablets.
+Mavis creates a colored matrix for an MSA. Users may choose to display residue symbols or not. The user interface is available in a web browser, in order to achieve better flexibility and portability. An API between the front-end and the back-end is designed to make the system extensible.
 
 \begin{figure}[hbt]
 \center{\includegraphics[width=0.72\textwidth]{figures/chap2_msa.png}}
 \caption[Example of MSA Coloring Result]{An example of MSA coloring result.}\label{fig:chap2_msa}
 \end{figure}
-
-An API between the front-end and the back-end is designed to make the system extensible for more add-ons and user interfaces.
