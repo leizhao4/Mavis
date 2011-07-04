@@ -1,0 +1,11 @@
+\chapter{Conclusion}\label{chap:Conclusion}
+
+In this report, we introduced Mavis, a new way of coloring and visualizing multiple sequence alignments. Our main objective has been to create an intuitive way of showing the quality and internal structure of an alignment. We use colors, which is the most natural and sensible way for human eyes, to accomplish this goal. The basic idea is, the greater the dissimilarity between sequences, the more obvious difference in colors.
+
+Most previous techniques were based on fixed color schemes, meaning each sequence symbol, like an amino acid or a nucleotide, is designated to a pre-selected color. This is of course a simple and straightforward solution, and is easy for observers to find a particular type or pattern of symbols. However, this fixed-scheme approach does not emphasize the relationship between adjacent columns and the internal regions and structures in the level of the whole alignment. This is the main reason why we don't use any predetermined color schemes.
+
+In order to dynamically generate colors for an MSA, we require a user-input data set of symbol-symbol similarity (or alignment confidence) scores. This data set is converted into a set of distance matrices, one for each alignment column. Each distance matrix is then scaled to a two-dimensional space and mapped onto a CIE Lab color space to get colors. To optimize the result, the color space is rotated and flipped to reduce the overall color noise level as low as possible. This strategy brings significant improvement to the alignment coloring, by showing the well aligned regions in solid colors, while poorly aligned ones in various different colors.
+
+Mavis is implemented in R, Perl, HTML, and JavaScript. The core algorithm written in R performs all the calculations. Perl CGI is used to set up an API between back-end and front-end. The API is designed in an extensible way and supports different user interfaces, even user-created ones. We provide a graphical user interface in HTML and JavaScript, which can be easily accessed over the Internet with any major web browsers.
+
+We hope Mavis becomes a fast, light-weight and easy-to-use tool for biologists who study comparative sequence data, and assists researchers to better analyze multiple sequence alignments, especially from functional, structural, and evolutionary perspectives.

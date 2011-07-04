@@ -1,14 +1,15 @@
 \documentclass[12pt]{report}
 \usepackage{uhthesis3}
-% \usepackage{epsfig}
-% \usepackage{epsf}
 \usepackage{booktabs}
 \usepackage[small,bf]{caption}
 \usepackage{graphicx}
 \usepackage{subfig}
-\input{definitions.tex}
+\usepackage{lscape}
+\usepackage[titletoc]{appendix}
 
+\input{definitions.tex}
 \setcounter{secnumdepth}{4}
+
 \begin{document}
 
 \title{\bf \large Mavis: Visualization Tool for Multiple Sequence Alignments}
@@ -46,8 +47,12 @@ Department of Computer Science}
 \input{chap4_Implementation.tex}
 \input{chap5_Results.tex}
 \input{chap6_Discussion.tex}
+\input{chap7_Conclusion.tex}
 
 \bibliographystyle{ieeetr}
 \bibliography{references}
+
+\appendix
+\input{appendices.tex}
 
 \end{document}

@@ -1,21 +1,39 @@
 \chapter{Discussion}\label{chap:Discussion}
 
-In this report, we introduced a new way of coloring and visualizing multiple sequence alignments based on symbol-symbol confidence (or similarity) scores. Our main objective has been to create an intuitive way of showing the quality and internal structure of an alignment, using colors, which is the most natural and sensible way for human eyes. The basic idea is, the greater the dissimilarity between sequences, the more obvious difference in colors.
-
 \section{Color Spaces}
 
-Most previous techniques were based on fixed color schemes, meaning each sequence symbol, like an amino acid or a nucleotide, is assigned to a pre-selected color. This is of course a simple and straightforward solution, and is easy for observers to find a particular symbol or pattern. However, this fixed-scheme approach does not emphasize the relationship between adjacent columns and the internal regions and structures in the level of the whole alignment. This is the main reason why we don't use any predetermined color scheme, but calculate colors only based on the distance matrices, and rotate and flip colors to make them as smooth as possible. This strategy brings significant improvement to the alignment coloring, by showing the better-aligned regions and blocks in same or similar colors, while those irrelevant ones in quite different colors.
+Since we are to convert the scaled coordinates to colors, choosing a suitable color space is an fundamental task. There are a number of available color spaces, some of them are listed in Table \ref{tab:color_spaces}.
 
-Since we are to convert the scaled coordinates to colors, choosing a suitable color space is an fundamental task. At first we scaled the distance matrix down to a three-dimensional space and mapped it directly to the RGB color space. However, we soon found a problem, that some colors, like very dark ones and very light ones, did not perfectly serve the purpose of representing distances, yet made the graph more noisy. We realized that we don't really need the whole color space and all possible colors. Instead, those colors with proper range of lightness and different hues will be enough to do the job. So we chose to scale down to a two-dimensional space and map it to CIE Lab space with a fixed lightness value (75). The reason why we didn’t choose one-dimensional scaling is that, a linear space either could not map to enough number of colors (for example, use only one primary color, like red), or could not preserve the distance information (for example, use only hues). So two dimensions is a good balance.
+\begin{table}[htb]
+\caption{Partial List of Color Spaces}\label{tab:color_spaces}\centering\small
+\begin{tabular}{ll} \toprule
+  Name          & Description                                                     \\ \hline
+  RGB           & additive color model based on red, green, and blue lights       \\
+  HSL           & a transformation of RGB, with hue, saturation, and lightness    \\
+  CMYK          & additive color model based on cyan, magenta, yellow, and black  \\
+  CIE 1931 XYZ  & the first color space based on measurements of human perception \\
+  CIE LUV       & a modification of CIE 1931 XYZ                                  \\
+  CIE Lab       & more perceptually linear than other color spaces                \\
+  CIE LCH       & polar form of CIE Lab                                           \\ \bottomrule
+\end{tabular}
+\end{table}
+
+RGB is one of the most commonly used color spaces. At first, we scaled the distance matrix down to a three-dimensional space and mapped it directly to the RGB color space. However, we soon noticed that some colors, especially very dark ones and very light ones, did not perfectly serve the purpose of representing distances, yet made the graph more noisy. We also considered HSL and CMYK, but none of them reflect human eye perception well enough. The color space we need is a perceptually linear one, which means that a change of the same amount in a color value should represent a change of approximately the same visual importance.
+
+After comparison and testing, we decided to choose CIE Lab color space, which best meets our needs. We also realized that using the whole color space and all possible colors is not necessary. Dark colors and light colors are not easy to be recognized and compared. Those with proper range of lightness are good enough for visualization purpose. So we decided to use only two dimensions of CIE Lab color space with a fixed lightness value (75). The algorithm reduces the higher dimensional space into a two-dimensional one and map it to this Lab space.
+
+The reason why we didn’t choose one-dimensional scaling is that a linear space either could not map to enough number of colors (for example, use only one primary color, like red), or could not preserve the distance information (for example, use only hues). We find two dimensions a good balance.
 
 \section{Optimization Algorithms}
 
-In R, there are several general purpose optimization packages which offer facilities for solving our color rotation and flipping problems. Two popular functions are optim() and nlminb() from package stats. Function optim() provides implementations of five algorithms: \emph{Broyden-Fletcher-Goldfarb-Shanno (BFGS)}, \emph{bounded BFGS (L-BFGS-B)}, \emph{conjugate gradient (CG)}, \emph{Nelder and Mead (Nelder-Mead)}, and \emph{simulated annealing (SANN)}. \emph{Nelder-Mead} \cite{Nelder:1965aa}, which is the default one, returns robust results but is relatively slow. \emph{CG} \cite{Fletcher:1964aa} in faster in larger optimization problems, but more fragile. \emph{BFGS} is a balance, and \emph{L-BFGS-B} further provides the ability of box constraints, that each variable can be given a lower/upper bound. \emph{SANN} \cite{Belisle:1992aa} is more powerful on rough surfaces but relatively slow. Another function \emph{nlminb()} offers similar box constraint optimization and similar performance to \emph{L-BFGS-B}, so these two algorithms are chosen to a further test.
+In R, there are several general purpose optimization packages which offer facilities for solving our color rotation and flipping problems. Two popular functions are optim() and nlminb() from package stats.
 
-Optimization algorithms always suffer from the local versus global minimum problem, and the final result are more or less unstable and depending on the initial values. To decide which one of \emph{L-BFGS-B} and \emph{nlminb()} is more stable in our approach, we run a test on both of them. The test dataset is the alignment of 44 Vpu protein sequences from GUIDANCE server \cite{Penn:2010ab}. We randomly created 100 sets of initial values, performed optimizations, and see how the return value of the penalty function (described in section \ref{sec:rotation}) changed. Table \ref{tab:optim-comp} shows the results of the comparison. Obviously \emph{L-BFGS-B} is more stable in our algorithm.
+Function optim() provides implementations of five algorithms: \emph{Broyden-Fletcher-Goldfarb-Shanno (BFGS)}, \emph{bounded BFGS (L-BFGS-B)}, \emph{conjugate gradient (CG)}, \emph{Nelder and Mead (Nelder-Mead)}, and \emph{simulated annealing (SANN)}. \emph{Nelder-Mead} \cite{Nelder:1965aa}, which is the default one, returns robust results but is relatively slow. \emph{CG} \cite{Fletcher:1964aa} in faster in larger optimization problems, but more fragile. \emph{BFGS} is a balance, and \emph{L-BFGS-B} further provides the ability of box constraints, that each variable can be given a lower/upper bound. \emph{SANN} \cite{Belisle:1992aa} is more powerful on rough surfaces but relatively slow. Another function \emph{nlminb()} offers similar box constraint optimization and similar performance to \emph{L-BFGS-B}, so these two algorithms are chosen to a further test.
 
-\begin{table}[hb]
-\caption{Comparison of \emph{L-BFGS-B} and \emph{nlminb()}}\label{tab:optim-comp}\centering\small
+Optimization algorithms always suffer from the local versus global minimum problem, and the final result are more or less unstable and depending on the initial values. To decide which one of \emph{L-BFGS-B} and \emph{nlminb()} is more stable in our approach, we run a test on both of them. The test dataset is the alignment of 44 Vpu protein sequences from GUIDANCE server \cite{Penn:2010ab}. We randomly created 100 sets of initial values, performed optimizations, and see how the return value of the penalty function (described in section \ref{sec:rotation}) changed. Table \ref{tab:optim-comp} shows the results of the comparison. 
+
+\begin{table}[hbt]
+\caption{Comparison of Optimization Functions \emph{L-BFGS-B} and \emph{nlminb()}}\label{tab:optim-comp}\centering\small
 \begin{tabular}{lcccc} \toprule
   Algorithm           & Min. Penalty  & Avg. Penalty  & Max. Penalty  & Std. Deviation  \\ \hline
   Initial             & 370,584       & 425,728       & 444,771       & 13,998          \\
@@ -25,3 +43,5 @@ Optimization algorithms always suffer from the local versus global minimum probl
   mlninb() (3 times)  & 142,888       & 171,380       & 325,469       & 21,402          \\ \bottomrule
 \end{tabular}
 \end{table}
+
+Although running \emph{mlninb()} three times results in the best and lowest average penalty value, it is not as good as \emph{L-BFGS-B} in terms of best case score (minimum penalty value), worst case score (maximum penalty value), and standard deviation. In addition, \emph{L-BFGS-B} reaches its best result in the first round, while \emph{mnlinb()} needs more rounds and longer time to lower the penalty score to an acceptable level. Thus, we believe that \emph{L-BFGS-B} is a more stable choice for our algorithm.
