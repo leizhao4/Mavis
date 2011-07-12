@@ -84,9 +84,11 @@ Numerous MSA visualization applications, either stand-alone or web-based, have b
 \caption[Some Nucleotide and Amino Acid Color Schemes]{Examples of color schemes used by some visualization tools \cite{Procter2010aa}.}\label{fig:procter-2bc}
 \end{figure}
 
-Coloring an alignment has been widely implemented to highlight specific regions, properties, or patterns. The simplest way of coloring is to use a fixed color scheme, in which each sequence symbol has its own color, and will not be changed across the alignment. The assignment of color schemes are usually based on some empirical properties or chemical classifications. Figure \ref{fig:procter-2bc} shows some nucleotide and amino acid color schemes used by major visualization tools.
+Coloring an alignment has been widely implemented to highlight specific regions, properties, or patterns. For example, sequences can be colored according to the similarity to consensus sequence, physicochemical properties of amino acids, or secondary structure of the proteins.
 
-There are numerous color schemes available for different purposes, but Taylor \cite{LIN2002361} and Clustal \cite{Thompsonaa} are frequently used and often considered \emph{de facto} standards. Figure \ref{fig:procter-2d} is Taylor's Venn diagram of color scheme.
+The simplest way of coloring is to use a fixed color scheme, in which each sequence symbol has its own color, and will not be changed across the alignment. The assignment of color schemes are usually based on some empirical properties or chemical classifications. Figure \ref{fig:procter-2bc} shows some nucleotide and amino acid color schemes used by major visualization tools.
+
+Numerous color schemes are available for different purposes. Taylor \cite{LIN2002361} and Clustal \cite{Thompsonaa} are two of the most frequently used and often considered \emph{de facto} standards. Figure \ref{fig:procter-2d} shows Taylor's Venn diagram of color scheme.
 
 \begin{figure}[hbt]
 \center{\includegraphics[width=0.6\textwidth]{figures/procter2d.pdf}}
@@ -95,20 +97,22 @@ There are numerous color schemes available for different purposes, but Taylor \c
 
 Using these pre-determined color schemes to color sequence symbols, however, is not always helpful for phylogenetic analysis. Those fixed color schemes reflect chemical differences between specific types of symbols, rather than between sequences, regions, blocks, or structures of the alignment.
 
+When symbols are examined within one column, the colors successfully show the similarities. But in the horizontal aspect, comparative information within a row or a rectangular region are unable to be displayed. For example, how is one sequence similar to others? Which sections align better than others? Which areas of the alignment are more conserved? How robust is the alignment accuracy?
+
+To make things worse, fixed color scheme can introduce confusions. Color difference between different columns gives an impression of dissimilarity, while it actually represents nothing. Figure \ref{fig:intro1} shows an example of this confusion.
+
 \begin{figure}[hbt]
 \centering
 \subfloat[A perfectly aligned MSA. However, the color graph is distractive and fails to convey a `perfect' feeling.]{\includegraphics[width=0.35\textwidth]{figures/intro1.pdf}}
 \hspace{5mm}
 \subfloat[This is an extremely poorly aligned one, but the color graph looks even better than (a).]{\includegraphics[width=0.35\textwidth]{figures/intro2.pdf}}
-\caption[Fixed Color Scheme Introduces Confusion]{Fixed color scheme introduces confusion.}\label{fig:intro1}
+\caption[Fixed Color Scheme Introduces Confusion]{Fixed color scheme introduces confusions.}\label{fig:intro1}
 \end{figure}
-
-When symbols are examined within one column, the colors successfully show the similarities. But in the horizontal aspect, comparative information within a row or a rectangular region are unable to be displayed, such as how one sequence is similar to others, which sections align better than others, which areas of the alignment are more conserved, or how robust the alignment accuracy is.
 
 \section{Thesis Outline}
 
-In this report, we introduce a new MSA visualization tool called \emph{Mavis} (Multiple Alignment VISualization). Mavis focuses on highlighting evolutionary relationships and internal structures of an alignment. Instead of relying on chemical properties or any other information from specific symbol types, our approach is based on only one metric, which is the symbol-symbol similarity score. The color of a sequence residue will not depend on its symbol type, but on its similarity scores with other residues. By using this new approach, we try to provide a whole picture of an MSA, in which the structure and quality are clearly displayed.
+In this report, we introduce a new MSA visualization tool called \emph{Mavis} (Multiple Alignment VISualization). Mavis focuses on highlighting evolutionary relationships and internal structures of an alignment. Instead of relying on chemical properties or any other information from specific symbol types, our approach is based on only one metric, which is the symbol-symbol similarity score. The color of a sequence residue will not depend on its symbol type, but on its similarity scores with other residues. By applying this new approach, we are able to provide a big picture of an MSA, in which the structure and quality are clearly displayed.
 
-The rest part of this thesis is organized into five chapters. Chapter 2 explains the general idea of how Mavis is designed and the steps it takes to color an MSA on a high level. Chapter 3 expounds the core algorithm step by step, from multidimensional scaling, to color mapping, and to optimization. Chapter 4 describes the implementation of the algorithm, including the back-end, API, and different user interfaces. Chapter 5 presents some test results to show the validity and performance of our implementation. The whole work is discussed and concluded in Chapters 6 and 7.
+The rest part of this thesis is organized into five chapters. Chapter 2 explains the general idea of how Mavis is designed and the steps it takes to color an MSA on a high level. Chapter 3 expounds the core algorithm step by step, from multidimensional scaling, to color mapping, and to optimization. Chapter 4 describes the implementation of the algorithm, including the back-end, API, and different user interfaces. Chapter 5 presents some test results to show the validity and performance of our implementation. The entire study is discussed in Chapter 6 and concluded in Chapter 7.
 
 The source code of Mavis back-end, API, and web interface is available in the Appendix at the end of this report.

@@ -1,7 +1,30 @@
 \renewcommand{\appendixname}{Appendix}
 
+\lstset{
+basicstyle=\footnotesize\ttfamily,
+numbers=left,
+numberstyle=\tiny,
+stepnumber=2,
+numbersep=25pt,
+tabsize=2,
+extendedchars=true,
+breaklines=true,
+}
+
 \begin{appendices}
+
 \chapter{Color-Generating Script}
+\section*{\emph{coloring.R}}
+\lstinputlisting{source/coloring.R}
+
 \chapter{API Script}
+\section*{\emph{api.pl}}
+\lstinputlisting{source/api.pl}
+\section*{\emph{Mavis/API.pm}}
+\lstinputlisting{source/API.pm}
+
 \chapter{User Interface Script}
+\section*{\emph{mavis.js}}
+\lstinputlisting{source/mavis.js}
+
 \end{appendices}

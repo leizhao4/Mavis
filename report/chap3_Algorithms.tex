@@ -54,7 +54,7 @@ At the end of this step, $n$ CIE Lab colors $(L, a, b)$ are created.
 
 \section{Hue Rotation and Optimization}\label{sec:rotation}
 
-One of the limitations in many previous MSA visualization techniques is that they introduced unnecessary confusion by using a fixed color scheme. Even for exactly same aligned columns, colors may be totally different, which won't represent any biological dissimilarities. To minimize this effect, we convert the colors from CIE Lab space to \emph{CIE LCH space} and perform rotations to eliminate noisy color patterns to the greatest extent possible. In this way, we smooth the color pattern and emphasize the real similarities and dissimilarities among sequences and blocks.
+One of the limitations in many previous MSA visualization techniques is that they introduced unnecessary confusion by using a fixed color scheme. Even for exactly same aligned columns, colors may be totally different, which will not represent any biological dissimilarities. To minimize this effect, we convert the colors from CIE Lab space to \emph{CIE LCH space} and perform rotations to eliminate noisy color patterns to the greatest extent possible. In this way, we smooth the color pattern and emphasize the real similarities and dissimilarities among sequences and blocks.
 
 The \emph{CIE LCH color space}, also known as polar-Lab color space, is a cylindrical transformation of the CIE Lab space so that the a and b axes are converted to a polar coordinate system. The radial coordinate $C$ measures \emph{chroma} and the angular coordinate $H$ measures \emph{hue}. LCH space makes it easier to rotate colors, by changing their \emph{hue} value. The CIE LCH colors can be converted from CIE Lab colors using an R library called \emph{colorspace} \cite{Ihaka:2009aa,Zeileis:2009aa}.
 
@@ -76,9 +76,9 @@ For each pair of adjacent columns $C_i$ and $C_{i+1}$, $1 \le i \le n-1$, compar
 
 In both lists, compare two neighboring hue values $h_{i,j}$ and $h_{i,j+1}$, $1\le j\le k-1$, using diff$()$ function described in section 3.3. If diff$(h_{i,j},h_{i,j+1})<-\frac{\pi}{8}$, the change from $h_{i,j}$ to $h_{i,j+1}$ is called a \emph{clockwise change}; if diff$(h_{i,j},h_{i,j+1})>\frac{\pi}{8}$, the change is called a \emph{counterclockwise change}; otherwise, it's considered to be unchanged.
 
-If a column contains more clockwise changes than counterclockwise changes, it's called \emph{clockwise column}; if it contains more counterclockwise changes, it's called \emph{counterclockwise column}; otherwise, it's a neutral column. Note that since gap rows are filtered out of the comparison, the type of a column may change when compared to different adjacent columns. For instance, a column may be clockwise compared to the previous column, and counterclockwise compared to the next column.
+If a column contains more clockwise changes than counterclockwise changes, it is called \emph{clockwise column}; if it contains more counterclockwise changes, it is called \emph{counterclockwise column}; otherwise, it is a neutral column. Note that since gap rows are filtered out of the comparison, the type of a column may change when compared to different adjacent columns. For instance, a column may be clockwise compared to the previous column, and counterclockwise compared to the next column.
 
-If two adjacent columns are in opposite types, flip the latter one to make them in same type. Then the flipped alignment are sent back to the procedure discussed in section 3.3.
+If two adjacent columns are in opposite types, flip the latter one to make them in same type. Then the flipped alignment are sent back to the procedure discussed in Section \ref{sec:rotation}.
 
 \section{Sequence Sorting}
 
@@ -86,6 +86,52 @@ The alignment graph is supposed to provide information on how sequences will gro
 
 The fact that hue values are circular, results in an additional question on where to cut the circle to get a sorted list of sequences. In a sorted circle of $n$ average hue values, $h_1,h_2,\cdots,h_n$, we calculate the absolute difference between each pair of adjacent ones ($h_1$ is adjacent to $h_n$). $$\Delta h_{1,2}=|\mathrm{diff}(h_1,h_2)|$$ $$\Delta h_{2,3}=|\mathrm{diff}(h_2,h_3)|$$ $$\cdots$$ $$\Delta h_{n,1}=|\mathrm{diff}(h_n,h_1)|$$ Then, the circle is split at the biggest gap $$\Delta h_{max}=\Delta h_{i,i+1}=|\mathrm{diff}(h_i,h_{i+1})|$$ to best avoid separating similar sequences.
 
-\section{Flowchart}
-
 \section{Time Complexity}
+
+Mavis has two time-consuming procedures in its MSA coloring algorithm. The first one is the multidimensional scaling which maps the distance matrix onto a high-dimensional space. The second one is the color optimization over rotation and flipping. For an MSA with $m$ sequences and $n$ columns, we analyze the time complexity of both procedures in this section.
+
+Algorithm \ref{alg:mds} shows the pseudocode of the multidimensional scaling procedure. This algorithm loops through $n$ columns. For each column, the number of residues is no more than $m$, which is the number of sequences, so the size of the distance matrix is no more than $m\times m$. The time complexity of the classic multidimensional scaling function with an $m\times m$ distance matrix is $O(m^3)$ \cite{Tzeng:2008qy}. Therefore, the time complexity of our scaling procedure is $O(m^3n)$.
+
+\begin{algorithm}
+\caption{Multidimensional Scaling Procedure}
+\label{alg:mds}
+\begin{algorithmic}
+  \STATE $scores \gets$ All similarity scores
+  \STATE $n \gets$ Number of columns
+  \STATE $coords \gets$ Empty set of coordinates
+  \FOR {$i = 1 \to n$}
+    \STATE $scores[column] \gets$ Subset of $scores$ for the $i$th column
+    \STATE $distances \gets$ Convert all $scores[column]$ into distances
+    \STATE $matrix \gets$ Distance matrix from $distances$
+    \STATE $coords[column] \gets$ Classic multidimensional scaling on $matrix$ ($O(m^3)$)
+    \STATE $coords[column] \gets$ Pick first two axes from $coords[column]$
+  \ENDFOR
+  \RETURN $coords$
+\end{algorithmic}
+\end{algorithm}
+
+In order to optimize color patterns by rotation and flipping, we define the penalty function, whose pseudocode is shown in Algorithm \ref{alg:optim}, to assess the overall color noise level. Then we run L-BFGS-B algorithm on this penalty function to search for its the global minimum value. 
+
+The penalty function consists of two steps. First, it applies a certain amount of rotation and flipping to each residue in the alignment, which takes $O(mn)$ time. Second, it loops though all $m$ rows, calculates the hue variance of each row, and sums them up. Since the calculation of hue variance on $n$ residues takes $O(n)$, this step takes $O(mn)$ time in total. So the total time complexity of penalty function is $O(mn)$.
+
+The time complexity of L-BFGS-B algorithm is $O(mk)$ where $k$ is a moderate number representing the limited amount of memory used in the algorithm \cite{Byrd:1995aa}. Therefore, the time complexity of the color optimization procedure is $O(m^2nk)$. Since $k<m$, it can also be considered as $O(m^3n)$.
+
+\begin{algorithm}
+\caption{Coloring Penalty Function}
+\label{alg:optim}
+\begin{algorithmic}
+  \FOR {$i = 1 \to n$}
+    \FOR {$j = 1 \to m$}
+      \STATE Apply rotation and flipping to the color in the $i$th column and the $j$th row
+    \ENDFOR
+  \ENDFOR
+  \STATE $sumvar \gets 0$
+  \FOR {$j = 1 \to m$}
+    \STATE $rowvar \gets$ Hue variance of the $j$th row ($O(n)$)
+    \STATE $sumvar \gets sumvar + rowvar$
+  \ENDFOR
+  \RETURN $sumvar$
+\end{algorithmic}
+\end{algorithm}
+
+As a result, we estimate that the overall time complexity of Mavis algorithm is $O(m^3n)$.

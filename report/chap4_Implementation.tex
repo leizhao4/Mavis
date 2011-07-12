@@ -1,10 +1,12 @@
 \chapter{Implementation}\label{chap:Implementation}
 
-We implemented the entire visualization pipeline on a Mac OS X server. The implementation consists of an R script as back-end, a Perl CGI script as API, and an HTML/JavaScript web page as user interface.
+We implemented Mavis' algorithm and user interface on a Mac OS X environment, while it is designed to work on other major platforms such as Microsoft Windows or Linux. The implementation consists of an R script as back-end to perform calculations and generate colors, a Perl CGI script as API, and an HTML and JavaScript web page as  the user interface.
 
-The R script, \emph{coloring.R}, takes the pair-wise similarity score file as input, performs multidimensional scaling and color optimization, sorts sequences, and output colors and sequence information into two tab-separated files, \emph{colors.tsv} and \emph{seqinfo.tsv}. The front-end web page takes an alignment ID as parameter and sends it to the API. The Perl CGI script parses the color file and sequence information file, along with the FASTA-format alignment file, and sends them back to front-end in JSON format \cite{crockford2006application}. The front-end uses JavaScript to generate the alignment matrix and render it with colors and symbol letters.
+The color-generating script, \emph{coloring.R}, is the core part of Mavis. It takes the pair-wise similarity score file, \emph{color.tsv}, as input, performs multidimensional scaling and color optimization, sorts sequences, and output colors and sequence information into two tab-separated files, \emph{colors.tsv} and \emph{seqinfo.tsv}. The front-end web page takes an alignment ID as parameter and sends it to the API. The Perl CGI script, \emph{api.pl}, parses the color file and sequence information file, along with the FASTA-format alignment file, and sends them back to front-end in JSON format \cite{crockford2006application}. The front-end uses a JavaScript, \emph{mavis.js}, to generate the alignment matrix and render it with colors and symbol letters.
 
-\section{R Script}
+The source code of \emph{coloring.R}, \emph{api.pl}, and \emph{mavis.js} are available in the Appendix.
+
+\section{Color-Generating Script}
 
 The script \emph{coloring.R} begins by reading three arguments from command-line calls: score file name, colors file name, and sequence information file name. The first file is for input and the latter two are for output. An example of calling this script on UNIX operating system is given below.
 \begin{verbatim}
@@ -12,7 +14,7 @@ The script \emph{coloring.R} begins by reading three arguments from command-line
 \end{verbatim}
 
 The file \emph{score.tsv} contains four columns separated by tabs: column number, first row number, second row number, and similarity score between these two rows in this column. The row and column numbers start from 1, and the similarity score values range from 0 to 1. Figure \ref{fig:score.tsv} shows a few example lines in a \emph{score.tsv} file.
-\begin{figure}[hb]
+\begin{figure}[hbt]
 \begin{quote}
 \begin{verbatim}
   #COL_NUMBER   #ROW_NUMBER_1   #ROW_NUMBER_2   #RES_PAIR_HIT/NALT
@@ -33,7 +35,7 @@ The file \emph{score.tsv} contains four columns separated by tabs: column number
 The script \emph{coloring.R} consists of four parts. The first part reads the input file, performs multidimensional scaling and create color for each symbol in the CIE LCH space. The second part rotates and flips color hues and optimize the penalty function. The third part sorts the sequences by their average hues and calculates each sequence’s average RGB color. The last part outputs the symbol colors and sequence information into corresponding files.
 
 The color output file, \emph{colors.tsv}, has five columns separated by tabs: column number, row number, and the symbol color in RGB triplet (red, green, blue) in the range from 0 to 1, which will be converted into hexadecimal format used in the user interface module. The sequence information file seqinfo.tsv also has five columns: row number, average hue from 0 to 360 degrees, and average color in RGB triplet. Figure \ref{fig:color.tsv} shows how a typical \emph{color.tsv} file looks like.
-\begin{figure}[hb]
+\begin{figure}[hbt]
 \begin{quote}
 \begin{verbatim}
 1       1       0.1065524      0.5616907       0.3943046
@@ -58,16 +60,22 @@ A Perl CGI script, \emph{api.pl}, and a Perl package \emph{Mavis::API} act as th
 
 The API returns the query result to the web page in JSON (JavaScript Object Notation) format, which is a lightweight text-based data-interchange standard. JSON is derived from a subset of JavaScript syntax and can be easily parsed in JavaScript as well as many other languages, like Perl. We included the Perl JSON 2.51 module to provide JSON encoding/decoding ability to our API \cite{crockford2006application}.
 
-Figure \ref{fig:api-res} is an example of the API response in JSON format:
-\begin{figure}[hb]
+Figure \ref{fig:api-res} shows an example of the API response in JSON format. The alignment ID is ``demo''. It contains two sequences, namely ``Seq01'' and ``Seq02''. Both sequences have the same content ``DEMO''. The status of this API response is 1, which means \emph{ready}. For more details, please refer to the source code attached at the end of this report.
+
+\begin{figure}[hbt]
 \begin{quote}
 \begin{verbatim}
-  { "status"    : 1,
+  {
+    "status"    : 1,
     "id"        : "demo",
-    "colors"    : [ ["#666","#666","#666","#666"],
-                    ["#665","#667","#667","#665"]],
-    "sequences" : [ {"name":"Seq02", "color":"#26e", "seq":"DEMO"},
-                    {"name":"Seq01", "color":"#26e", "seq":"DEMO"}]
+    "colors"    : [
+      [ "#666", "#666", "#666", "#666" ],
+      [ "#665", "#667", "#667", "#665" ]
+    ],
+    "sequences" : [
+      { "name": "Seq02", "color": "#26e", "seq": "DEMO" },
+      { "name": "Seq01", "color": "#26e", "seq": "DEMO" }
+    ]
   }
 \end{verbatim}
 \end{quote}
@@ -76,13 +84,24 @@ Figure \ref{fig:api-res} is an example of the API response in JSON format:
 
 \section{User Interfaces}
 
-We implement an web interface with HTML and JavaScript to send API requests and draw visualization graphs. The JavaScript code dynamically communicates with API, creates an HTML table, and fills in colors and symbols. This part is simplified by jQuery, which is a popular cross-platform JavaScript library that abstracts complicated DOM selection, CSS manipulation and Ajax effects.
+We implement a web interface with HTML and JavaScript to send API requests, process API responses, and draw the MSA matrix with colors.
+
+The JavaScript code communicates with API using Ajax requests, which means that the request and response are performed asynchronously, without refreshing the web page. When JavaScript receives the Ajax response from the API, it updates the alignment matrix with colors on the web page. If the coloring data is not ready, the script periodically check with the API and updates the web page as soon as the data becomes available.
+
+Figure \ref{fig:chap4_mavis} shows the web user interface of Mavis displayed in Firefox 5 and Mac OS X 10.6. The leftmost bar shows the average hue of each sequence. The sequences are sorted by this hue value, in order to help users group them. The sequence names are displayed to the right of the average hue bar. Current date and time are added at the bottom-right corner. If Mavis has more than one colored alignment available, there will be a alignment list on the bottom of the page.
+
+Users can choose to display sequence residue symbols or not by toggling a button at the top-left corner. Figure \ref{fig:chap4_mavis2} shows the colored alignment without symbols displayed, which provides a clearer view of color patterns.
 
 \begin{landscape}
 \begin{figure}[p]
-\center{\includegraphics[height=0.83\textwidth]{figures/chap4_mavis.png}}
-\caption[MSA Rendered by Mavis in Web Browser]{An MSA rendered by Mavis in Firefox 5.}\label{fig:chap4_mavis}
+\center{\includegraphics[height=0.9\textwidth]{figures/chap4_mavis.png}}
+\caption[Web User Interface with Symbols]{An MSA rendered by Mavis displayed in Firefox 5.}\label{fig:chap4_mavis}
 \end{figure}
 \end{landscape}
 
-\section{Design Principles}
+\begin{landscape}
+\begin{figure}[p]
+\center{\includegraphics[height=0.9\textwidth]{figures/chap4_mavis2.png}}
+\caption[Web User Interface without Symbols]{An MSA rendered by Mavis displayed in Firefox 5. Sequence residue symbols are hidden.}\label{fig:chap4_mavis2}
+\end{figure}
+\end{landscape}
