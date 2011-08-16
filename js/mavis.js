@@ -24,12 +24,11 @@ function refreshDisplay() {
   drawAlignmentLayout();
   drawAlignmentTable();
   drawAlignmentColors();
-  //drawAlignmentPlot();
 }
 
 function drawAlignmentLayout(title) {
   if (!title || title.length < 1)
-    title = "Multiple Sequence Alignment Visualization" + (alignmentID.length > 0 ? " (ID: " + alignmentID + ")" : "");
+    title = "Mavis" + (alignmentID.length > 0 ? " (ID: " + alignmentID + ")" : "");
   $("#alignment_container").html("<div id='alignment_header'>" + title + "</div>");
   $("#alignment_container").append("<a href='#' class='button' onclick='toggleAlignmentText()'>Show/Hide Sequence Text</a>");
   $("#alignment_container").append("<table id='alignment_table' cellspacing='0'></table>");
@@ -70,23 +69,6 @@ function drawAlignmentColors() {
   });
   $.each(alignmentData.sequences, function(i, sequence) {
     $("#seq_color_" + sequence.row).css("background-color", sequence.color);
-  });
-}
-
-function drawAlignmentPlot() {
-  var plotHTML = "";
-  for (b = 100; b >= -100; b -= 10) {
-    plotHTML += "<tr>";
-    for (a = -100; a <= 100; a += 10) {
-      plotHTML += "<td id='plot_" + a + "_" + b + "'>-</td>";
-    }
-    plotHTML += "</tr>";
-  }
-  $("#alignment_plot").html(plotHTML);
-  $.each(alignmentData.sequences, function(i, sequence) {
-    var a = Math.round(sequence.a / 10) * 10;
-    var b = Math.round(sequence.b / 10) * 10;
-    $("#plot_" + a + "_" + b).html("x");
   });
 }
 

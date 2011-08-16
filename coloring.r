@@ -46,7 +46,6 @@ createLch    <- function(scaled) {
 adjustColor <- function(lchColor) {
   lchData   <- coords(lchColor)
   chroma    <- lchData[, 2]
-  #chroma    <- (chroma / max(chroma)) * 80 + 0
   lightness <- (chroma / max(chroma)) * 0 + 70
   lchData   <- cbind(lightness, chroma, lchData[, 3])
   lchColor  <- polarLAB(lchData)
@@ -77,12 +76,33 @@ angleAdd  <- function(angleA, angleB) {
   (angleA + angleB) %% 360
 }
 
+doFlipping <- function(lchData) {
+  nCols    <- max(lchData[, 1])
+  nRows    <- max(lchData[, 2])
+  for (col in 1 : (nCols - 1)) {
+    hues   <- matrix(ncol = 2, nrow = 0)
+    colOne <- lchData[lchData[, 1] == col, ]
+    colTwo <- lchData[lchData[, 1] == col + 1, ]
+    for (row in 1 : nRows) {
+      hue1 <- colOne[colOne[, 2] == row, 5]
+      hue2 <- colTwo[colOne[, 2] == row, 5]
+      if (length(hue1) & length(hue2)) {
+        hues <- rbind(hues, c(hue1, hue2))
+      }
+    }
+    if (nrow(hues) < 2) next
+    changes <- hues[c(2 : nrow(hues), 1), ] - hues
+    changes <- ifelse(abs(angleDiff(changes, 0)) < 10 | abs(angleDiff(changes, 180)) < 10, 0, changes)
+    direction <- ifelse(changes > 0, 1, -1)
+    if (sum(direction[, 1]) * sum(direction[, 2]) < 0) {
+      lchData[lchData[, 1] == col + 1, 5] = 360 - lchData[lchData[, 1] == col + 1, 5]
+    }
+  }
+  lchData
+}
+
 doRotation <- function(lchData, rotation) {
-  flip     <- rotation < 0
-  flpData  <- lchData
-  flpData[, 5] <- ifelse(flip[flpData[, 1]], (- flpData[, 5]) %% 360, flpData[, 5])
-  rotation <- abs(rotation)
-  rotData  <- flpData
+  rotData  <- lchData
   rotData[, 5] <- angleAdd(rotData[, 5], rotation[rotData[, 1]])
   rotData
 }
@@ -106,7 +126,7 @@ initRot    <- function(lchData) {
 
 bfgsOptim  <- function(lchData, rotation) {
   nCols    <- length(rotation)
-  optimRot <- optim(rotation, penalty, NULL, method = "L-BFGS-B", lower = rep(-360, nCols), upper = rep(360, nCols))
+  optimRot <- optim(rotation, penalty, NULL, method = "L-BFGS-B", lower = rep(0, nCols), upper = rep(360, nCols))
   optimRot$par
 }
 
@@ -128,21 +148,11 @@ sortSeq    <- function(rotData) {
   for (row in 1 : nRows) {
     rowData  <- rotData[rotData[, 2] == row, ]
     rowAvg   <- angleAvg(rowData[, 5]) %% 360
-    avgColor <- colorAvg(rowData)
-    sortData <- rbind(sortData, c(row, rowAvg, avgColor))
+    sortData <- rbind(sortData, c(row, rowAvg))
   }
   seqOrder <- sortData[order(sortData[, 2]), ]
   seqOrder <- rotSeqOrd(seqOrder)
   seqOrder
-}
-
-colorAvg   <- function(lchData) { # need to be refactored
-  lchColor <- polarLAB(data.matrix(lchData[, 3:5]))
-  rgbColor <- as(lchColor, "RGB")
-  rgbData  <- coords(rgbColor)
-  labColor <- as(rgbColor, "LAB")
-  labData  <- coords(labColor)
-  c(mean(data.frame(rgbData)), mean(data.frame(labData)))
 }
 
 outputData <- function(rotData, seqOrder) {
@@ -150,7 +160,7 @@ outputData <- function(rotData, seqOrder) {
   rgbColor <- as(lchColor, "RGB")
   rgbData  <- cbind(rotData[, 1:2], coords(rgbColor))
   write(t(rgbData),  file = FILE.COLOR, sep = "\t", ncolumns = 5)
-  write(t(seqOrder), file = FILE.ORDER, sep = "\t", ncolumns = 8)
+  write(t(seqOrder), file = FILE.ORDER, sep = "\t", ncolumns = 2)
 }
 
 scaled   <- scaleScore(FILE.SCORE)
@@ -158,10 +168,12 @@ lchColor <- createLch(scaled)
 lchColor <- adjustColor(lchColor)
 lchData  <- colorToData(lchColor)
 
+lchData  <- doFlipping(lchData)
+
 rotation <- initRot(lchData)
 rotation <- bfgsOptim(lchData, rotation)
-
 rotData  <- doRotation(lchData, rotation)
+
 seqOrder <- sortSeq(rotData)
 
 outputData(rotData, seqOrder)

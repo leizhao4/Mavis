@@ -1,4 +1,4 @@
-package MSAV::API;
+package Mavis::API;
 
 use warnings;
 use strict;

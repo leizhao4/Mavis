@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use CGI qw(:standard);
 use JSON;
-use MSAV::API;
+use Mavis::API;
 
 my $action   = param('action');
 my $align_id = param('id');
