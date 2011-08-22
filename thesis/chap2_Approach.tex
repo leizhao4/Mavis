@@ -18,7 +18,7 @@ In the alignment matrix, a well-aligned area should be represented by a solid-co
 
 Figure \ref{fig:app-wa}(a) shows a well-aligned MSA region, which contains many different types of amino acids. In order to demonstrate the good alignment quality, however, these amino acids are supposed to be painted with the same or similar colors. Obviously, the color assignment could not depend only on their residue types.
 
-Therefore, unlike most traditional coloring approaches, we use an set of residue-residue similarity scores instead. Within each column of an MSA, all sequence residues are considered to be aligned together at the same equivalent position. We employ a third-party tool to examine each pair of these residues, and estimate the confidence that they should be aligned together. This confidence estimation can also be interpreted as a similarity score between the two residues.
+Therefore, unlike most traditional coloring approaches, we use a set of residue-residue similarity scores instead. Within each column of an MSA, all sequence residues are considered to be aligned together at the same equivalent position. We employ a third-party tool to examine each pair of these residues, and estimate the confidence that they should be aligned together. This confidence estimation can also be interpreted as a similarity score between the two residues.
 
 Every pair of residues within a same column has a similarity score. These scores are used to determine how similar the residue colors should appear to each other. In a good-quality MSA region, all residues are confidently aligned together, therefore the colors would be same or similar. While in a bad-quality region, many alignments are doubtable, resulting in many different colors.
 
