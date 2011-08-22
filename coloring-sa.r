@@ -1,10 +1,11 @@
 library("colorspace")
+library("seqinr")
 
 args <- commandArgs(TRUE)
 
 FILE.SCORE <- args[1]
-FILE.COLOR <- args[2]
-FILE.ORDER <- args[3]
+FILE.ALIGN <- args[2]
+FILE.HTML  <- args[3]
 
 scaleScore <- function(filename) {
   rawData  <- read.table(filename)
@@ -157,13 +158,92 @@ sortSeq    <- function(rotData) {
   seqOrder
 }
 
-outputData <- function(rotData, seqOrder) {
+lchToRgb   <- function(rotData) {
   lchColor <- polarLAB(data.matrix(rotData[, 3:5]))
   rgbColor <- as(lchColor, "RGB")
   rgbData  <- cbind(rotData[, 1:2], coords(rgbColor))
-  write(t(rgbData),  file = FILE.COLOR, sep = "\t", ncolumns = 5)
-  write(t(seqOrder), file = FILE.ORDER, sep = "\t", ncolumns = 2)
+  rgbData
 }
+
+outputHtml <- function(rgbData, seqOrder) {
+  header   <- '
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+      <title>Mavis Output</title>
+      <style>
+        *     { margin: 0; padding: 0; font-family: Verdana; font-size: 8pt; }
+        body  { padding: 0 24px; margin-bottom: 40px; }
+        #alignment_header   { font-size: 24pt; margin: 18px 0; padding: 0 0 6px 6px; border-bottom: solid 1px #aaa; }
+        #alignment_footer   { text-align: right; margin: 18px 0; padding: 6px 12px; border-top: solid 1px #aaa; }
+        #alignment_table    { margin: 10px 20px; }
+        #alignment_table *  { font-family: Courier, "Courier New"; }
+        #alignment_table td.seq_name  { padding: 0 10px; }
+      </style>
+    </head>
+    <body>
+      <div id="alignment_container">
+        <div id="alignment_header">Mavis Output</div>
+        <table id="alignment_table" cellspacing="0">'
+  footer    <- '</table></div><div id="alignment_footer"></div></body></html>'
+  alignHtml <- ""
+  alignData <- read.fasta(FILE.ALIGN)
+  for (row in seqOrder[, 1]) {
+    sequence  <- alignData[row]
+    seqAvgHue <- seqOrder[seqOrder[, 1] == row, 2]
+    seqName   <- attr(sequence, "name")
+    seqChars  <- unlist(sequence)
+    alignHtml <- paste(alignHtml, '<tr><td bgcolor="', hueToColor(seqAvgHue), '">&nbsp;</td>', sep = '')
+    alignHtml <- paste(alignHtml, '<td class="seq_name">', seqName, '</td>', sep = '')
+    for (col in 1 : length(seqChars)) {
+      cellColor <- getColor(rgbData, row, col) 
+      alignHtml <- paste(alignHtml, '<td bgcolor="', cellColor, '">', toupper(seqChars[col]), '</td>', sep = '')
+    }  
+    alignHtml <- paste(alignHtml, "</tr>", sep = '')
+  }
+  html <- paste(header, alignHtml, footer, sep = '')
+  write(html, file = FILE.HTML)
+}
+
+hueToColor <- function(hue) {
+  "#a37"
+}
+
+getColor   <- function(rgbData, row, col) {
+  cellData <- rgbData[rgbData[, 1] == col & rgbData[, 2] == row, ]
+  colorHex <- '#fff'
+  if (nrow(cellData) > 0) {
+    red      <- decToHex1(cellData[1, 3])
+    green    <- decToHex1(cellData[1, 4])
+    blue     <- decToHex1(cellData[1, 5])
+    colorHex <- paste('#', red, green, blue, sep = '')
+  }
+  colorHex
+}
+
+decToHex1  <- function(decimal) {
+  decimal  <- max(0, min(1, decimal))
+  sprintf("%1x", floor(decimal * 15.99))
+}
+
+hueToColor <- function(hue) {
+	red   <- decToHex1(hueToPrim(hue + 120))
+	green <- decToHex1(hueToPrim(hue))
+	blue  <- decToHex1(hueToPrim(hue - 120))
+	colorHex <- paste('#', red, green, blue, sep = '')
+	colorHex
+}
+
+hueToPrim  <- function(hue) {
+	hue <- hue %% 360
+  if      (hue < 60)  prim <- hue / 60
+  else if (hue < 180) prim <- 1
+  else if (hue < 240) prim <- (240 - hue) / 60
+	else                prim <- 0
+	prim
+}
+
 
 scaled   <- scaleScore(FILE.SCORE)
 lchColor <- createLch(scaled)
@@ -178,4 +258,7 @@ rotData  <- doRotation(lchData, rotation)
 
 seqOrder <- sortSeq(rotData)
 
-outputData(rotData, seqOrder)
+rgbData  <- lchToRgb(rotData)
+outputHtml(rgbData, seqOrder)
+
+cat(paste("\nWebpage", FILE.HTML, "has been creaated successfully.\n\n"))
