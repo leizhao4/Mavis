@@ -28,11 +28,10 @@ function refreshDisplay() {
 
 function drawAlignmentLayout(title) {
   if (!title || title.length < 1)
-    title = "Multiple Sequence Alignment Visualization" + (alignmentID.length > 0 ? " (ID: " + alignmentID + ")" : "");
+    title = "Mavis" + (alignmentID.length > 0 ? " (ID: " + alignmentID + ")" : "");
   $("#alignment_container").html("<div id='alignment_header'>" + title + "</div>");
   $("#alignment_container").append("<a href='#' class='button' onclick='toggleAlignmentText()'>Show/Hide Sequence Text</a>");
   $("#alignment_container").append("<table id='alignment_table' cellspacing='0'></table>");
-  $("#alignment_container").append("<table id='alignment_plot' cellspacing='0'></table>");
   $("#alignment_container").append("<div id='alignment_footer'>" + localtime() + "</div>");
 }
 

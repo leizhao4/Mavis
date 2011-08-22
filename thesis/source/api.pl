@@ -21,8 +21,7 @@ if (!defined $action or $action eq 'alignment') {
 }
 elsif ($action eq 'list') {
   opendir DATADIR, 'data' or die "Can't open data directory.";
-  my @align_list = grep { /^[^\.]/ } readdir(DATADIR)
-    or die "Can't read data directory.";
+  my @align_list = grep { /^[^\.]/ } readdir(DATADIR) or die "Can't read data directory.";
   closedir DATADIR;
   print encode_json [ @align_list ];
 }
